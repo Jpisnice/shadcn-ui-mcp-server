@@ -13,7 +13,7 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { setupHandlers } from './handler.js';
-import { axios } from './utils/axios.js';
+import { validateFrameworkSelection, getAxiosImplementation } from './utils/framework.js';
 import { z } from 'zod';
 import { 
   toolHandlers,
@@ -38,6 +38,7 @@ Usage:
 
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token for API access
+  --framework, -f <framework>     Framework to use: 'react' or 'svelte' (default: react)
   --help, -h                      Show this help message
   --version, -v                   Show version information
 
@@ -45,9 +46,12 @@ Examples:
   npx shadcn-ui-mcp-server
   npx shadcn-ui-mcp-server --github-api-key ghp_your_token_here
   npx shadcn-ui-mcp-server -g ghp_your_token_here
+  npx shadcn-ui-mcp-server --framework svelte
+  npx shadcn-ui-mcp-server -f react
 
 Environment Variables:
   GITHUB_PERSONAL_ACCESS_TOKEN    Alternative way to provide GitHub token
+  FRAMEWORK                       Framework to use: 'react' or 'svelte' (default: react)
   LOG_LEVEL                       Log level (debug, info, warn, error) - default: info
 
 For more information, visit: https://github.com/Jpisnice/shadcn-ui-mcp-server
@@ -97,6 +101,12 @@ async function main() {
     logInfo('Starting Shadcn UI v4 MCP Server...');
 
     const { githubApiKey } = await parseArgs();
+
+    // Validate and log framework selection
+    validateFrameworkSelection();
+
+    // Get the appropriate axios implementation based on framework
+    const axios = await getAxiosImplementation();
 
     // Configure GitHub API key if provided
     if (githubApiKey) {

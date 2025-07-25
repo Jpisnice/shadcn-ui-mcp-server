@@ -1,8 +1,9 @@
-import { axios } from '../../utils/axios.js';
+import { getAxiosImplementation } from '../../utils/framework.js';
 import { logError } from '../../utils/logger.js';
 
 export async function handleListBlocks({ category }: { category?: string }) {
   try {
+    const axios = await getAxiosImplementation();
     const blocks = await axios.getAvailableBlocks(category);
     return {
       content: [{ 

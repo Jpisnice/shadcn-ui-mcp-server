@@ -1,8 +1,9 @@
-import { axios } from '../../utils/axios.js';
+import { getAxiosImplementation } from '../../utils/framework.js';
 import { logError } from '../../utils/logger.js';
 
 export async function handleGetComponentDemo({ componentName }: { componentName: string }) {
   try {
+    const axios = await getAxiosImplementation();
     const demoCode = await axios.getComponentDemo(componentName);
     return {
       content: [{ type: "text", text: demoCode }]

@@ -1,4 +1,4 @@
-import { axios } from '../../utils/axios.js';
+import { getAxiosImplementation } from '../../utils/framework.js';
 import { logError } from '../../utils/logger.js';
 
 export async function handleGetBlock({ 
@@ -9,6 +9,7 @@ export async function handleGetBlock({
   includeComponents?: boolean 
 }) {
   try {
+    const axios = await getAxiosImplementation();
     const blockData = await axios.getBlockCode(blockName, includeComponents);
     return {
       content: [{ type: "text", text: JSON.stringify(blockData, null, 2) }]

@@ -1,4 +1,4 @@
-import { axios } from '../../utils/axios.js';
+import { getAxiosImplementation } from '../../utils/framework.js';
 import { logError } from '../../utils/logger.js';
 
 export async function handleGetDirectoryStructure({ 
@@ -13,10 +13,14 @@ export async function handleGetDirectoryStructure({
   branch?: string 
 }) {
   try {
+    const axios = await getAxiosImplementation();
+    // Get the default path based on available properties
+    const defaultPath = 'BLOCKS' in axios.paths ? axios.paths.BLOCKS : axios.paths.NEW_YORK_V4_PATH;
+    
     const directoryTree = await axios.buildDirectoryTree(
       owner || axios.paths.REPO_OWNER,
       repo || axios.paths.REPO_NAME,
-      path || axios.paths.NEW_YORK_V4_PATH,
+      path || defaultPath,
       branch || axios.paths.REPO_BRANCH
     );
     return {
