@@ -12,7 +12,7 @@ echo "✅ Testing --help flag..."
 ./build/index.js --help > /dev/null
 echo "   Help command works!"
 
-# Test 2: Version command  
+# Test 2: Version command
 echo "✅ Testing --version flag..."
 VERSION=$(./build/index.js --version)
 echo "   Version: $VERSION"
@@ -48,8 +48,8 @@ fi
 echo "✅ Testing build files..."
 REQUIRED_FILES=(
     "build/index.js"
-    "build/handler.js" 
-    "build/tools.js"
+    "build/handler.js"
+    "build/tools/index.js"
     "build/utils/axios.js"
 )
 
