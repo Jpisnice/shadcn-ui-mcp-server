@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  shadcn-mcp-server:
+    build: .
+    container_name: shadcn-mcp-server
+    ports:
+      - "7423:7423"
+    environment:
+      - MCP_TRANSPORT_MODE=sse
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=7423
+      - MCP_CORS_ORIGINS=*
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN:-}
+    volumes:
+      # Mount logs directory for persistent logging (optional)
+      - ./logs:/app/logs
+    networks:
+      - mcp-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # Optional: nginx reverse proxy for production deployment
+  nginx:
+    image: nginx:alpine
+    container_name: mcp-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - shadcn-mcp-server
+    networks:
+      - mcp-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  logs:
+    driver: local
