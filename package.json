@@ -1,6 +1,6 @@
 {
   "name": "@jpisnice/shadcn-ui-mcp-server",
-  "version": "1.0.4",
+  "version": "1.1.4",
   "description": "A Model Context Protocol (MCP) server for shadcn/ui components, providing AI assistants with access to component source code, demos, blocks, and metadata.",
   "type": "module",
   "main": "./build/index.js",
@@ -14,11 +14,11 @@
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf build",
-    "prepublishOnly": "npm run security:all && npm run test && npm run clean && npm run build && chmod +x build/index.js",
+    "clean": "node -e \"const fs=require('fs');if(fs.existsSync('build'))fs.rmSync('build',{recursive:true,force:true})\"",
+    "prepublishOnly": "npm run security:all && npm run test && npm run clean && npm run build",
     "start": "node build/index.js",
     "dev": "tsc && node build/index.js",
-    "test": "./test-package.sh",
+    "test": "powershell -ExecutionPolicy Bypass -File test-package.ps1",
     "examples": "./examples.sh",
     "security:audit": "npm audit --audit-level=moderate",
     "security:audit:fix": "npm audit fix",
@@ -30,7 +30,9 @@
     "version:patch": "node scripts/bump-version.js patch",
     "version:minor": "node scripts/bump-version.js minor",
     "version:major": "node scripts/bump-version.js major",
-    "publish:package": "./scripts/publish.sh"
+    "publish:package": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1",
+    "publish:fast": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1 -SkipSecurity",
+    "publish:force": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1 -Force"
   },
   "keywords": [
     "mcp",
