@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./build/index.js",
   "bin": {
-    "shadcn-mcp": "./build/index.js"
+    "shadcn-mcp": "build/index.js"
   },
   "files": [
     "build/**/*",
@@ -30,9 +30,8 @@
     "version:patch": "node scripts/bump-version.js patch",
     "version:minor": "node scripts/bump-version.js minor",
     "version:major": "node scripts/bump-version.js major",
-    "publish:package": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1",
-    "publish:fast": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1 -SkipSecurity",
-    "publish:force": "powershell -ExecutionPolicy Bypass -File scripts/publish-windows.ps1 -Force"
+    "publish:auto": "powershell -ExecutionPolicy Bypass -File scripts/publish.ps1",
+    "publish:quick": "powershell -ExecutionPolicy Bypass -File scripts/publish.ps1 -SkipTests -Force"
   },
   "keywords": [
     "mcp",

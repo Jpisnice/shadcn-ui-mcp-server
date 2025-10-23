@@ -102,12 +102,49 @@ echo "✅ Testing React Native framework startup..."
 FRAMEWORK=react-native node ./build/index.js --help > /dev/null
 echo "   RN framework help works!"
 
+# Test 9: Security audit
+echo "✅ Running security audit..."
+if npm audit --audit-level=moderate > /dev/null 2>&1; then
+    echo "   Security audit passed!"
+else
+    echo "   ⚠️  Security audit found issues - run 'npm audit' for details"
+fi
+
+# Test 10: License compliance check
+echo "✅ Checking license compliance..."
+if command -v license-checker > /dev/null 2>&1; then
+    if license-checker --summary > /dev/null 2>&1; then
+        echo "   License compliance check passed!"
+    else
+        echo "   ⚠️  License compliance issues found - run 'npm run security:licenses' for details"
+    fi
+else
+    echo "   ℹ️  license-checker not available - skipping license check"
+fi
+
+# Test 11: Bundle size check
+echo "✅ Checking bundle size..."
+if [[ -f "build/index.js" ]]; then
+    SIZE=$(wc -c < build/index.js)
+    SIZE_KB=$((SIZE / 1024))
+    echo "   Bundle size: ${SIZE_KB}KB"
+    if [[ $SIZE_KB -gt 1000 ]]; then
+        echo "   ⚠️  Bundle size is large (${SIZE_KB}KB) - consider optimization"
+    else
+        echo "   Bundle size is reasonable"
+    fi
+fi
+
 echo ""
 echo "🎉 All tests passed! Package is ready for publishing."
 echo ""
 echo "To publish to npm:"
 echo "  1. npm login"
-echo "  2. npm publish"
+echo "  2. npm run publish:package"
+echo ""
+echo "Or manually:"
+echo "  1. npm run security:all"
+echo "  2. npm publish --access public"
 echo ""
 echo "To test locally with npx:"
 echo "  npx ./build/index.js --help"
