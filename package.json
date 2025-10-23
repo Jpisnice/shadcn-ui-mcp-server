@@ -1,6 +1,6 @@
 {
   "name": "@jpisnice/shadcn-ui-mcp-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Model Context Protocol (MCP) server for shadcn/ui components, providing AI assistants with access to component source code, demos, blocks, and metadata.",
   "type": "module",
   "main": "./build/index.js",
@@ -15,11 +15,22 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf build",
-    "prepublishOnly": "npm run clean && npm run build && chmod +x build/index.js",
+    "prepublishOnly": "npm run security:all && npm run test && npm run clean && npm run build && chmod +x build/index.js",
     "start": "node build/index.js",
     "dev": "tsc && node build/index.js",
     "test": "./test-package.sh",
-    "examples": "./examples.sh"
+    "examples": "./examples.sh",
+    "security:audit": "npm audit --audit-level=moderate",
+    "security:audit:fix": "npm audit fix",
+    "security:licenses": "license-checker --summary",
+    "security:snyk": "snyk test",
+    "security:secrets": "echo 'Secret scanning would be implemented with gitleaks'",
+    "security:all": "npm run security:audit && npm run security:licenses && npm run security:snyk || echo 'Snyk authentication required - run snyk auth to enable'",
+    "prepublish:security": "npm run security:all",
+    "version:patch": "node scripts/bump-version.js patch",
+    "version:minor": "node scripts/bump-version.js minor",
+    "version:major": "node scripts/bump-version.js major",
+    "publish:package": "./scripts/publish.sh"
   },
   "keywords": [
     "mcp",
@@ -49,18 +60,20 @@
     "@modelcontextprotocol/sdk": "^1.16.0",
     "axios": "^1.8.4",
     "cheerio": "^1.0.0",
-    "zod": "^3.24.2",
-    "winston": "^3.15.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "joi": "^17.13.3",
     "uuid": "^10.0.0",
-    "express": "^4.21.2",
-    "cors": "^2.8.5"
+    "winston": "^3.15.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.10.5",
     "@types/uuid": "^10.0.0",
-    "@types/express": "^5.0.1",
-    "@types/cors": "^2.8.17",
+    "license-checker": "^25.0.1",
+    "snyk": "^1.1300.1",
     "typescript": "^5.7.2"
   }
 }
