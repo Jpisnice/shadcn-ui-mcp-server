@@ -20,6 +20,13 @@ export const capabilities = {
         "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
       contentType: "text/plain",
     },
+    get_themes:{
+      description:
+      "will fetch all the themes from tweakcn",
+      uriTemplate:
+      "",
+      contentType:"text/plain"
+    },
   },
   prompts: {
     component_usage: {
@@ -181,6 +188,31 @@ export const capabilities = {
               "Filter by category (calendar, dashboard, login, sidebar, products)",
           },
         },
+      },
+    },
+    // Tweakcn theme tools
+    get_tweakcn_presets: {
+      description: "Fetch available tweakcn theme presets (list)",
+      inputSchema: {
+        type: "object",
+        properties: {
+          query: { type: "string", description: "Search keywords to filter presets" },
+        },
+      },
+    },
+    apply_tweakcn_theme: {
+      description:
+        "Apply a tweakcn theme preset to the project (writes CSS to global.css).",
+      inputSchema: {
+        type: "object",
+        properties: {
+          presetId: { type: "string", description: "ID of the preset to apply" },
+          query: { type: "string", description: "Search keywords to find a preset" },
+          tailwindVersion: { type: "string", description: "3 or 4", enum: ["3", "4"] },
+          cssPath: { type: "string", description: "Optional explicit path to global.css to write" },
+          dryRun: { type: "boolean", description: "If true, do not write files; just return preview" },
+        },
+        required: [],
       },
     },
   },
