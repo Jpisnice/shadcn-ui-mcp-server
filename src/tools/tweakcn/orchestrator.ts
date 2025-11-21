@@ -1,8 +1,8 @@
 import fetchPresetsFromGithub from "./fetch-presets.js";
-import { filterPresets } from "./parse-presets";
-import convertPresetToThemeStyles from "./convert-preset";
-import generateCssAndConfig from "./generate-wrapper";
-import { locateGlobalCss, writeThemeBlock } from "./locate-and-write";
+import { filterPresets } from "./parse-presets.js";
+import convertPresetToThemeStyles from "./convert-preset.js";
+import generateCssAndConfig from "./generate-wrapper.js";
+import { locateGlobalCss, writeThemeBlock } from "./locate-and-write.js";
 import path from "path";
 
 const DEFAULT_PRESETS_URL =
