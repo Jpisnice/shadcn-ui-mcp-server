@@ -20,13 +20,6 @@ export const capabilities = {
         "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
       contentType: "text/plain",
     },
-    get_themes:{
-      description:
-      "will fetch all the themes from tweakcn",
-      uriTemplate:
-      "",
-      contentType:"text/plain"
-    },
   },
   prompts: {
     component_usage: {

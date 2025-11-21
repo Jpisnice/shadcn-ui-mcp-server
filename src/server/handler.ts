@@ -204,6 +204,32 @@ export const setupHandlers = (server: Server): void => {
               },
             },
           },
+          {
+            name: 'apply_theme',
+            description: 'Apply a TweakCN theme preset to the project',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                query: {
+                  type: 'string',
+                  description: "Search query for theme (e.g., 'cyberpunk', 'modern')",
+                },
+                presetId: {
+                  type: 'string',
+                  description: "Specific preset ID if known",
+                },
+                tailwindVersion: {
+                  type: 'string',
+                  enum: ['3', '4'],
+                  description: "Tailwind CSS version (default: '4')",
+                },
+                dryRun: {
+                  type: 'boolean',
+                  description: "If true, returns preview instead of writing files",
+                },
+              },
+            },
+          },
         ];
         
         return { tools: registeredTools };
@@ -340,6 +366,14 @@ function getToolSchema(toolName: string): z.ZodType | undefined {
         
       case 'get_blocks':
         return z.object(blocksSchema);
+        
+      case 'apply_theme':
+        return z.object({
+          query: z.string().optional(),
+          presetId: z.string().optional(),
+          tailwindVersion: z.enum(['3', '4']).optional(),
+          dryRun: z.boolean().optional(),
+        });
         
       default:
         return undefined;
