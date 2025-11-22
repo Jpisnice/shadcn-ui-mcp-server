@@ -230,6 +230,28 @@ export const setupHandlers = (server: Server): void => {
               },
             },
           },
+          {
+            name: 'list_themes',
+            description: 'List available tweakcn themes',
+            inputSchema: {
+              type: 'object',
+              properties: {},
+            },
+          },
+          {
+            name: 'get_theme',
+            description: 'Get details of a specific tweakcn theme',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                themeName: {
+                  type: 'string',
+                  description: "Name or ID of the theme to retrieve",
+                },
+              },
+              required: ['themeName'],
+            },
+          },
         ];
         
         return { tools: registeredTools };
@@ -373,6 +395,16 @@ function getToolSchema(toolName: string): z.ZodType | undefined {
           presetId: z.string().optional(),
           tailwindVersion: z.enum(['3', '4']).optional(),
           dryRun: z.boolean().optional(),
+        });
+
+      case 'list_themes':
+        return z.object({
+          query: z.string().optional(),
+        });
+
+      case 'get_theme':
+        return z.object({
+          themeName: z.string(),
         });
         
       default:

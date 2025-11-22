@@ -208,5 +208,24 @@ export const capabilities = {
         required: [],
       },
     },
+    list_themes: {
+      description: "List available tweakcn themes",
+      inputSchema: {
+        type: "object",
+        properties: {
+          query: { type: "string", description: "Search query to filter themes" },
+        },
+      },
+    },
+    get_theme: {
+      description: "Get details of a specific tweakcn theme",
+      inputSchema: {
+        type: "object",
+        properties: {
+          themeName: { type: "string", description: "Name or ID of the theme to retrieve" },
+        },
+        required: ["themeName"],
+      },
+    },
   },
 }

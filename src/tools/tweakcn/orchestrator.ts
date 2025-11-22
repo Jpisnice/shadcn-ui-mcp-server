@@ -5,7 +5,7 @@ import generateCssAndConfig from "./generate-wrapper.js";
 import { locateGlobalCss, writeThemeBlock } from "./locate-and-write.js";
 import path from "path";
 
-const DEFAULT_PRESETS_URL =
+export const DEFAULT_PRESETS_URL =
   "https://raw.githubusercontent.com/jnsahaj/tweakcn/main/utils/theme-presets.ts";
 
 export async function applyPresetByIdOrQuery(options: {
