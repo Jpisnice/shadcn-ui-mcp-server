@@ -20,6 +20,11 @@ export const capabilities = {
         "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
       contentType: "text/plain",
     },
+    get_theme_metadata: {
+      description: "Get metadata for all available tweakcn themes",
+      uri: "resource:get_theme_metadata",
+      contentType: "application/json",
+    },
   },
   prompts: {
     component_usage: {
