@@ -6,20 +6,6 @@ export const capabilities = {
       uri: "resource:get_components",
       contentType: "text/plain",
     },
-    get_install_script_for_component: {
-      description:
-        "Generate installation script for a specific shadcn/ui component based on package manager",
-      uriTemplate:
-        "resource-template:get_install_script_for_component?packageManager={packageManager}&component={component}",
-      contentType: "text/plain",
-    },
-    get_installation_guide: {
-      description:
-        "Get the installation guide for shadcn/ui based on build tool and package manager",
-      uriTemplate:
-        "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
-      contentType: "text/plain",
-    },
     get_theme_metadata: {
       description: "Get metadata for all available tweakcn themes",
       uri: "resource:get_theme_metadata",

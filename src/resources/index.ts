@@ -20,18 +20,6 @@ export const resources = [
     contentType: 'text/plain',
   },
   {
-    name: 'get_install_script',
-    description: 'Returns the installation script for shadcn/ui components',
-    uri: 'resource:get_install_script',
-    contentType: 'text/plain',
-  },
-  {
-    name: 'get_installation_guide',
-    description: 'Returns the installation guide for shadcn/ui components',
-    uri: 'resource:get_installation_guide',
-    contentType: 'text/plain',
-  },
-  {
     name: 'get_theme_metadata',
     description: 'Returns metadata about the currently configured theme',
     uri: 'resource:get_theme_metadata',
