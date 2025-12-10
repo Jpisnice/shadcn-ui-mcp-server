@@ -5,6 +5,9 @@ import { handleGetComponentMetadata } from './components/get-component-metadata.
 import { handleGetDirectoryStructure } from './repository/get-directory-structure.js';
 import { handleGetBlock } from './blocks/get-block.js';
 import { handleListBlocks } from './blocks/list-blocks.js';
+import { handleApplyTheme, schema as applyThemeSchema } from './tweakcn/apply-theme.js';
+import { handleListThemes, schema as listThemesSchema } from './tweakcn/list-themes.js';
+import { handleGetTheme, schema as getThemeSchema } from './tweakcn/get-theme.js';
 
 import { schema as getComponentSchema } from './components/get-component.js';
 import { schema as getComponentDemoSchema } from './components/get-component-demo.js';
@@ -21,7 +24,10 @@ export const toolHandlers = {
   get_component_metadata: handleGetComponentMetadata,
   get_directory_structure: handleGetDirectoryStructure,
   get_block: handleGetBlock,
-  list_blocks: handleListBlocks
+  list_blocks: handleListBlocks,
+  apply_theme: handleApplyTheme,
+  list_themes: handleListThemes,
+  get_theme: handleGetTheme
 };
 
 export const toolSchemas = {
@@ -31,7 +37,10 @@ export const toolSchemas = {
   get_component_metadata: getComponentMetadataSchema,
   get_directory_structure: getDirectoryStructureSchema,
   get_block: getBlockSchema,
-  list_blocks: listBlocksSchema
+  list_blocks: listBlocksSchema,
+  apply_theme: applyThemeSchema,
+  list_themes: listThemesSchema,
+  get_theme: getThemeSchema
 };
 
 export const tools = {
@@ -93,6 +102,31 @@ export const tools = {
     inputSchema: {
       type: 'object',
       properties: listBlocksSchema
+    }
+  },
+  'apply_theme': {
+    name: 'apply_theme',
+    description: 'Apply a TweakCN theme preset to the project',
+    inputSchema: {
+      type: 'object',
+      properties: applyThemeSchema
+    }
+  },
+  'list_themes': {
+    name: 'list_themes',
+    description: 'List available tweakcn themes',
+    inputSchema: {
+      type: 'object',
+      properties: listThemesSchema
+    }
+  },
+  'get_theme': {
+    name: 'get_theme',
+    description: 'Get details of a specific tweakcn theme',
+    inputSchema: {
+      type: 'object',
+      properties: getThemeSchema,
+      required: ['themeName']
     }
   }
 }; 

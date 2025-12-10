@@ -1,0 +1,961 @@
+{
+  "themes": {
+    "modern-minimal": {
+      "name": "Modern Minimal",
+      "description": "Clean and professional design with cool blue accents. Perfect for corporate apps and tech products. Emphasizes simplicity with a neutral palette and modern aesthetics.",
+      "keywords": [
+        "minimal",
+        "professional",
+        "clean",
+        "modern",
+        "corporate",
+        "tech",
+        "neutral"
+      ],
+      "primaryColor": "#3b82f6",
+      "vibes": [
+        "professional",
+        "tech",
+        "minimal",
+        "corporate",
+        "clean"
+      ]
+    },
+    "violet-bloom": {
+      "name": "Violet Bloom",
+      "description": "Elegant purple and violet tones with soft shadows. Ideal for creative and design-focused applications. Modern and sophisticated aesthetic with refined color transitions.",
+      "keywords": [
+        "elegant",
+        "creative",
+        "purple",
+        "modern",
+        "sophisticated",
+        "artistic"
+      ],
+      "primaryColor": "#7033ff",
+      "vibes": [
+        "elegant",
+        "creative",
+        "modern",
+        "sophisticated",
+        "artistic"
+      ]
+    },
+    "t3-chat": {
+      "name": "T3 Chat",
+      "description": "Warm magentas and purples creating a friendly chat interface aesthetic. Perfect for messaging apps and social platforms. Vibrant and engaging user experience.",
+      "keywords": [
+        "warm",
+        "friendly",
+        "magenta",
+        "chat",
+        "social",
+        "messaging",
+        "vibrant"
+      ],
+      "primaryColor": "#a84370",
+      "vibes": [
+        "friendly",
+        "warm",
+        "social",
+        "chat",
+        "engaging"
+      ]
+    },
+    "twitter": {
+      "name": "Twitter",
+      "description": "Iconic Twitter aesthetic with bright blue primary color. Minimal and content-focused design. Perfect for social media platforms and information sharing apps.",
+      "keywords": [
+        "social",
+        "twitter",
+        "bright",
+        "minimal",
+        "content-focused",
+        "media"
+      ],
+      "primaryColor": "#1e9df1",
+      "vibes": [
+        "social",
+        "content",
+        "minimal",
+        "bright",
+        "engaging"
+      ]
+    },
+    "mocha-mousse": {
+      "name": "Mocha Mousse",
+      "description": "Warm earthy browns and taupes creating a cozy, organic feel. Great for lifestyle and food-related apps. Inviting and sophisticated warmth throughout the interface.",
+      "keywords": [
+        "cozy",
+        "warm",
+        "organic",
+        "earthy",
+        "brown",
+        "lifestyle",
+        "food"
+      ],
+      "primaryColor": "#A37764",
+      "vibes": [
+        "cozy",
+        "warm",
+        "organic",
+        "earthy",
+        "inviting"
+      ]
+    },
+    "bubblegum": {
+      "name": "Bubblegum",
+      "description": "Playful pinks and teals with vibrant accent colors. Fun and youthful aesthetic perfect for interactive and creative apps. Bold primary accent for maximum vibrancy.",
+      "keywords": [
+        "playful",
+        "pink",
+        "fun",
+        "youthful",
+        "vibrant",
+        "creative",
+        "bold"
+      ],
+      "primaryColor": "#d04f99",
+      "vibes": [
+        "playful",
+        "fun",
+        "youthful",
+        "vibrant",
+        "creative"
+      ]
+    },
+    "amethyst-haze": {
+      "name": "Amethyst Haze",
+      "description": "Soft purples and mauves with gentle gradients. Dreamy and calming atmosphere suitable for wellness and lifestyle apps. Promotes relaxation and introspection.",
+      "keywords": [
+        "calming",
+        "dreamy",
+        "soft",
+        "wellness",
+        "purple",
+        "gentle",
+        "relaxing"
+      ],
+      "primaryColor": "#8a79ab",
+      "vibes": [
+        "calming",
+        "dreamy",
+        "wellness",
+        "soft",
+        "peaceful"
+      ]
+    },
+    "notebook": {
+      "name": "Notebook",
+      "description": "Retro handwritten aesthetic with warm beige and grays. Like writing in a physical notebook. Perfect for note-taking and journaling apps. Nostalgic analog feel.",
+      "keywords": [
+        "retro",
+        "handwritten",
+        "nostalgic",
+        "notes",
+        "journal",
+        "warm",
+        "analog"
+      ],
+      "primaryColor": "#606060",
+      "vibes": [
+        "retro",
+        "nostalgic",
+        "journal",
+        "handwritten",
+        "analog"
+      ]
+    },
+    "doom-64": {
+      "name": "Doom 64",
+      "description": "Retro gaming aesthetic with bold reds and greens. Nostalgic 90s retro look with sharp contrast and energy. High-impact design for gaming and entertainment.",
+      "keywords": [
+        "retro",
+        "gaming",
+        "bold",
+        "nostalgic",
+        "90s",
+        "energy",
+        "gaming"
+      ],
+      "primaryColor": "#b71c1c",
+      "vibes": [
+        "retro",
+        "gaming",
+        "bold",
+        "nostalgic",
+        "energetic"
+      ]
+    },
+    "catppuccin": {
+      "name": "Catppuccin",
+      "description": "Popular theme with purple accents and soft pastels. Known for its aesthetic and smooth appearance across dev tools and interfaces. Community favorite with perfect balance.",
+      "keywords": [
+        "pastel",
+        "purple",
+        "aesthetic",
+        "smooth",
+        "popular",
+        "dev-friendly",
+        "balanced"
+      ],
+      "primaryColor": "#8839ef",
+      "vibes": [
+        "aesthetic",
+        "pastel",
+        "smooth",
+        "popular",
+        "balanced"
+      ]
+    },
+    "graphite": {
+      "name": "Graphite",
+      "description": "Minimalist grayscale theme with muted colors. Professional and neutral. Great for content-heavy applications and serious business use.",
+      "keywords": [
+        "minimal",
+        "grayscale",
+        "neutral",
+        "professional",
+        "muted",
+        "serious"
+      ],
+      "primaryColor": "#606060",
+      "vibes": [
+        "minimal",
+        "neutral",
+        "professional",
+        "muted",
+        "serious"
+      ]
+    },
+    "perpetuity": {
+      "name": "Perpetuity",
+      "description": "Teal and cyan inspired theme with tech aesthetic. Modern and futuristic with cool color palette. Perfect for developer tools and technical applications.",
+      "keywords": [
+        "teal",
+        "cyan",
+        "tech",
+        "futuristic",
+        "modern",
+        "cool",
+        "developer"
+      ],
+      "primaryColor": "#06858e",
+      "vibes": [
+        "tech",
+        "futuristic",
+        "modern",
+        "cool",
+        "cutting-edge"
+      ]
+    },
+    "kodama-grove": {
+      "name": "Kodama Grove",
+      "description": "Natural forest-inspired theme with greens and warm earth tones. Organic and nature-focused aesthetic. Perfect for environmental and wellness applications.",
+      "keywords": [
+        "nature",
+        "forest",
+        "green",
+        "organic",
+        "earth",
+        "natural",
+        "environmental"
+      ],
+      "primaryColor": "#8d9d4f",
+      "vibes": [
+        "nature",
+        "organic",
+        "natural",
+        "forest",
+        "peaceful"
+      ]
+    },
+    "cosmic-night": {
+      "name": "Cosmic Night",
+      "description": "Deep purples and blues with a cosmic feel. Mysterious and elegant atmosphere for deep focus apps. Inspires wonder and concentration.",
+      "keywords": [
+        "cosmic",
+        "mysterious",
+        "dark",
+        "elegant",
+        "space",
+        "purple",
+        "mysterious"
+      ],
+      "primaryColor": "#6e56cf",
+      "vibes": [
+        "cosmic",
+        "mysterious",
+        "elegant",
+        "dark",
+        "inspired"
+      ]
+    },
+    "tangerine": {
+      "name": "Tangerine",
+      "description": "Warm orange and coral tones with blue accents. Energetic and friendly aesthetic for modern apps. Uplifting and approachable design language.",
+      "keywords": [
+        "warm",
+        "orange",
+        "energetic",
+        "friendly",
+        "coral",
+        "vibrant",
+        "uplifting"
+      ],
+      "primaryColor": "#e05d38",
+      "vibes": [
+        "warm",
+        "energetic",
+        "friendly",
+        "vibrant",
+        "uplifting"
+      ]
+    },
+    "quantum-rose": {
+      "name": "Quantum Rose",
+      "description": "Vibrant magentas and pinks with gradient effects. Bold and modern for trendy applications. Cutting-edge design with maximum impact.",
+      "keywords": [
+        "vibrant",
+        "pink",
+        "bold",
+        "trendy",
+        "modern",
+        "gradient",
+        "futuristic"
+      ],
+      "primaryColor": "#e6067a",
+      "vibes": [
+        "vibrant",
+        "bold",
+        "trendy",
+        "modern",
+        "futuristic"
+      ]
+    },
+    "nature": {
+      "name": "Nature",
+      "description": "Green-dominated theme with natural brown accents. Eco-friendly and organic aesthetic perfect for sustainability apps. Promotes environmental consciousness.",
+      "keywords": [
+        "green",
+        "nature",
+        "eco",
+        "organic",
+        "natural",
+        "sustainability",
+        "environmental"
+      ],
+      "primaryColor": "#2e7d32",
+      "vibes": [
+        "eco",
+        "natural",
+        "organic",
+        "green",
+        "sustainable"
+      ]
+    },
+    "bold-tech": {
+      "name": "Bold Tech",
+      "description": "Deep purples and blues with strong contrast. Modern tech aesthetic for developer tools and SaaS apps. Professional and technically advanced appearance.",
+      "keywords": [
+        "bold",
+        "tech",
+        "deep",
+        "purple",
+        "developer",
+        "modern",
+        "advanced"
+      ],
+      "primaryColor": "#8b5cf6",
+      "vibes": [
+        "bold",
+        "tech",
+        "developer",
+        "modern",
+        "advanced"
+      ]
+    },
+    "elegant-luxury": {
+      "name": "Elegant Luxury",
+      "description": "Rich burgundy and gold tones with sophisticated shadows. Premium and luxurious aesthetic for high-end applications. Exudes wealth and refinement.",
+      "keywords": [
+        "luxury",
+        "elegant",
+        "premium",
+        "sophisticated",
+        "burgundy",
+        "gold",
+        "refined"
+      ],
+      "primaryColor": "#9b2c2c",
+      "vibes": [
+        "luxury",
+        "elegant",
+        "premium",
+        "sophisticated",
+        "refined"
+      ]
+    },
+    "amber-minimal": {
+      "name": "Amber Minimal",
+      "description": "Warm amber and golden tones with clean minimal design. Modern yet warm and inviting. Perfect balance between contemporary and cozy.",
+      "keywords": [
+        "amber",
+        "gold",
+        "warm",
+        "minimal",
+        "modern",
+        "inviting",
+        "balanced"
+      ],
+      "primaryColor": "#f59e0b",
+      "vibes": [
+        "warm",
+        "minimal",
+        "modern",
+        "inviting",
+        "balanced"
+      ]
+    },
+    "supabase": {
+      "name": "Supabase",
+      "description": "Green and fresh with bright accents. Official Supabase branding aesthetic. Perfect for database and backend apps. Tech-forward and modern.",
+      "keywords": [
+        "green",
+        "fresh",
+        "bright",
+        "supabase",
+        "backend",
+        "database",
+        "modern"
+      ],
+      "primaryColor": "#72e3ad",
+      "vibes": [
+        "fresh",
+        "bright",
+        "tech",
+        "backend",
+        "modern"
+      ]
+    },
+    "claymorphism": {
+      "name": "Claymorphism",
+      "description": "Soft rounded design with indigo accents and clay-like aesthetics. Modern design trend perfect for UI showcases. Playful yet sophisticated appearance.",
+      "keywords": [
+        "clay",
+        "soft",
+        "rounded",
+        "modern",
+        "trend",
+        "design",
+        "playful"
+      ],
+      "primaryColor": "#6366f1",
+      "vibes": [
+        "soft",
+        "modern",
+        "design",
+        "trendy",
+        "playful"
+      ]
+    },
+    "clean-slate": {
+      "name": "Clean Slate",
+      "description": "Simple blue and gray palette. Professional and straightforward design. Good starting point for any project. Versatile and neutral foundation.",
+      "keywords": [
+        "clean",
+        "simple",
+        "professional",
+        "blue",
+        "minimal",
+        "fresh",
+        "versatile"
+      ],
+      "primaryColor": "#6366f1",
+      "vibes": [
+        "clean",
+        "simple",
+        "professional",
+        "fresh",
+        "versatile"
+      ]
+    },
+    "midnight-bloom": {
+      "name": "Midnight Bloom",
+      "description": "Deep purples with mysterious elegance. Perfect for applications requiring a moody and introspective atmosphere. Inspires deep thinking and creativity.",
+      "keywords": [
+        "dark",
+        "purple",
+        "mysterious",
+        "elegant",
+        "moody",
+        "midnight",
+        "creative"
+      ],
+      "primaryColor": "#6c5ce7",
+      "vibes": [
+        "dark",
+        "mysterious",
+        "elegant",
+        "moody",
+        "creative"
+      ]
+    },
+    "candyland": {
+      "name": "Candyland",
+      "description": "Bright, playful pastels including pinks, blues and yellows. Fun and whimsical aesthetic for kids or playful apps. Rainbow of happiness and joy.",
+      "keywords": [
+        "playful",
+        "pastel",
+        "candy",
+        "bright",
+        "fun",
+        "whimsical",
+        "joyful"
+      ],
+      "primaryColor": "#ffc0cb",
+      "vibes": [
+        "playful",
+        "fun",
+        "bright",
+        "whimsical",
+        "joyful"
+      ]
+    },
+    "northern-lights": {
+      "name": "Northern Lights",
+      "description": "Aurora borealis inspired greens and cyans. Magical and natural aesthetic with cool tones. Enchanting and serene atmosphere.",
+      "keywords": [
+        "aurora",
+        "green",
+        "cyan",
+        "magical",
+        "natural",
+        "cool",
+        "enchanting"
+      ],
+      "primaryColor": "#34a85a",
+      "vibes": [
+        "magical",
+        "natural",
+        "cool",
+        "peaceful",
+        "enchanting"
+      ]
+    },
+    "darkmatter": {
+      "name": "Darkmatter",
+      "description": "Dark orange and teal theme with modern aesthetics. Perfect for dark mode applications and developer tools. Sleek and sophisticated dark interface.",
+      "keywords": [
+        "dark",
+        "orange",
+        "teal",
+        "modern",
+        "developer",
+        "tech",
+        "sleek"
+      ],
+      "primaryColor": "#d87943",
+      "vibes": [
+        "dark",
+        "modern",
+        "tech",
+        "developer",
+        "sleek"
+      ]
+    },
+    "oceanic": {
+      "name": "Oceanic",
+      "description": "Deep blues and teals inspired by ocean waters. Calming and fluid design aesthetic. Perfect for travel, water-related, or meditation apps.",
+      "keywords": [
+        "ocean",
+        "blue",
+        "teal",
+        "calm",
+        "fluid",
+        "water",
+        "peaceful"
+      ],
+      "primaryColor": "#00a8cc",
+      "vibes": [
+        "calm",
+        "fluid",
+        "peaceful",
+        "natural",
+        "serene"
+      ]
+    },
+    "sunset-glow": {
+      "name": "Sunset Glow",
+      "description": "Warm oranges, pinks, and yellows creating a golden hour aesthetic. Romantic and dreamy atmosphere. Perfect for lifestyle and travel applications.",
+      "keywords": [
+        "sunset",
+        "orange",
+        "pink",
+        "warm",
+        "romantic",
+        "dreamy",
+        "golden"
+      ],
+      "primaryColor": "#ff9a56",
+      "vibes": [
+        "romantic",
+        "dreamy",
+        "warm",
+        "golden",
+        "peaceful"
+      ]
+    },
+    "forest-green": {
+      "name": "Forest Green",
+      "description": "Deep forest greens with earthy browns. Natural and grounded aesthetic. Ideal for outdoor, eco, or nature-focused applications.",
+      "keywords": [
+        "forest",
+        "green",
+        "earth",
+        "nature",
+        "grounded",
+        "outdoor",
+        "natural"
+      ],
+      "primaryColor": "#1b4332",
+      "vibes": [
+        "grounded",
+        "natural",
+        "earthy",
+        "peaceful",
+        "strong"
+      ]
+    },
+    "neon-future": {
+      "name": "Neon Future",
+      "description": "Cyberpunk neon colors with dark background. Futuristic and high-tech aesthetic. Perfect for gaming, tech startups, and cutting-edge applications.",
+      "keywords": [
+        "neon",
+        "cyberpunk",
+        "futuristic",
+        "tech",
+        "dark",
+        "vibrant",
+        "gaming"
+      ],
+      "primaryColor": "#00ff00",
+      "vibes": [
+        "futuristic",
+        "tech",
+        "vibrant",
+        "edgy",
+        "cutting-edge"
+      ]
+    },
+    "cherry-blossom": {
+      "name": "Cherry Blossom",
+      "description": "Soft pinks and whites with delicate floral accents. Feminine and elegant aesthetic. Perfect for beauty, fashion, and lifestyle brands.",
+      "keywords": [
+        "pink",
+        "floral",
+        "delicate",
+        "feminine",
+        "elegant",
+        "fashion",
+        "beauty"
+      ],
+      "primaryColor": "#ff69b4",
+      "vibes": [
+        "feminine",
+        "delicate",
+        "elegant",
+        "romantic",
+        "beautiful"
+      ]
+    },
+    "steel-blue": {
+      "name": "Steel Blue",
+      "description": "Strong steel blue tones with gray accents. Industrial and serious aesthetic. Perfect for engineering, construction, and technical platforms.",
+      "keywords": [
+        "steel",
+        "blue",
+        "industrial",
+        "serious",
+        "strong",
+        "technical",
+        "mechanical"
+      ],
+      "primaryColor": "#4682b4",
+      "vibes": [
+        "industrial",
+        "serious",
+        "strong",
+        "technical",
+        "reliable"
+      ]
+    },
+    "lavender-mist": {
+      "name": "Lavender Mist",
+      "description": "Soft lavender and light purple tones. Calm and meditative aesthetic. Ideal for wellness, meditation, and relaxation applications.",
+      "keywords": [
+        "lavender",
+        "purple",
+        "calm",
+        "meditative",
+        "soft",
+        "wellness",
+        "relaxing"
+      ],
+      "primaryColor": "#b19cd9",
+      "vibes": [
+        "calm",
+        "meditative",
+        "soft",
+        "peaceful",
+        "relaxing"
+      ]
+    },
+    "citrus-burst": {
+      "name": "Citrus Burst",
+      "description": "Vibrant oranges, lemons, and limes creating a fresh and energetic aesthetic. Perfect for food, fitness, and health applications.",
+      "keywords": [
+        "citrus",
+        "orange",
+        "fresh",
+        "energetic",
+        "vibrant",
+        "health",
+        "food"
+      ],
+      "primaryColor": "#ff6b00",
+      "vibes": [
+        "energetic",
+        "fresh",
+        "vibrant",
+        "healthy",
+        "lively"
+      ]
+    },
+    "slate-shadow": {
+      "name": "Slate Shadow",
+      "description": "Muted slate grays with deep shadows. Corporate and understated elegance. Perfect for financial and professional services.",
+      "keywords": [
+        "slate",
+        "gray",
+        "corporate",
+        "professional",
+        "muted",
+        "elegant",
+        "financial"
+      ],
+      "primaryColor": "#556b6b",
+      "vibes": [
+        "corporate",
+        "professional",
+        "elegant",
+        "serious",
+        "trustworthy"
+      ]
+    },
+    "ruby-wine": {
+      "name": "Ruby Wine",
+      "description": "Deep ruby reds and wine tones. Rich and sophisticated aesthetic. Perfect for premium services, luxury goods, and entertainment.",
+      "keywords": [
+        "ruby",
+        "wine",
+        "red",
+        "rich",
+        "sophisticated",
+        "luxury",
+        "premium"
+      ],
+      "primaryColor": "#8b0000",
+      "vibes": [
+        "rich",
+        "sophisticated",
+        "luxury",
+        "premium",
+        "elegant"
+      ]
+    },
+    "mint-frost": {
+      "name": "Mint Frost",
+      "description": "Cool mint greens and icy blues. Refreshing and modern aesthetic. Perfect for tech startups, apps, and innovative platforms.",
+      "keywords": [
+        "mint",
+        "fresh",
+        "cool",
+        "modern",
+        "tech",
+        "innovative",
+        "refreshing"
+      ],
+      "primaryColor": "#98ff98",
+      "vibes": [
+        "fresh",
+        "modern",
+        "tech",
+        "innovative",
+        "cool"
+      ]
+    },
+    "charcoal-white": {
+      "name": "Charcoal White",
+      "description": "High contrast charcoal and white palette. Clean and bold aesthetic. Perfect for maximalist design and strong typography.",
+      "keywords": [
+        "charcoal",
+        "white",
+        "contrast",
+        "bold",
+        "clean",
+        "minimal",
+        "dramatic"
+      ],
+      "primaryColor": "#333333",
+      "vibes": [
+        "bold",
+        "clean",
+        "dramatic",
+        "minimal",
+        "strong"
+      ]
+    },
+    "silk-rose": {
+      "name": "Silk Rose",
+      "description": "Delicate rose pinks with soft whites and creams. Luxurious and feminine aesthetic. Perfect for beauty, fashion, and lifestyle brands.",
+      "keywords": [
+        "rose",
+        "pink",
+        "silk",
+        "delicate",
+        "luxurious",
+        "feminine",
+        "elegant"
+      ],
+      "primaryColor": "#e8a5c7",
+      "vibes": [
+        "luxurious",
+        "feminine",
+        "delicate",
+        "elegant",
+        "beautiful"
+      ]
+    },
+    "thunder-storm": {
+      "name": "Thunder Storm",
+      "description": "Dark grays and electric blues creating a stormy aesthetic. Bold and energetic. Perfect for apps requiring intensity and drama.",
+      "keywords": [
+        "storm",
+        "dark",
+        "gray",
+        "blue",
+        "electric",
+        "dramatic",
+        "intense"
+      ],
+      "primaryColor": "#4a4a5e",
+      "vibes": [
+        "bold",
+        "dramatic",
+        "energetic",
+        "intense",
+        "moody"
+      ]
+    }
+  },
+  "total_themes": 41,
+  "categories": {
+    "professional": [
+      "modern-minimal",
+      "graphite",
+      "clean-slate",
+      "bold-tech",
+      "steel-blue",
+      "slate-shadow"
+    ],
+    "creative": [
+      "violet-bloom",
+      "bubblegum",
+      "quantum-rose",
+      "claymorphism",
+      "charcoal-white",
+      "silk-rose"
+    ],
+    "natural": [
+      "nature",
+      "kodama-grove",
+      "northern-lights",
+      "mocha-mousse",
+      "forest-green",
+      "ocean"
+    ],
+    "dark": [
+      "cosmic-night",
+      "midnight-bloom",
+      "darkmatter",
+      "perpetuity",
+      "thunder-storm",
+      "neon-future"
+    ],
+    "playful": [
+      "candyland",
+      "bubblegum",
+      "notebook",
+      "t3-chat",
+      "cherry-blossom",
+      "citrus-burst"
+    ],
+    "retro": [
+      "doom-64",
+      "notebook",
+      "catppuccin"
+    ],
+    "warm": [
+      "tangerine",
+      "amber-minimal",
+      "mocha-mousse",
+      "elegant-luxury",
+      "sunset-glow",
+      "ruby-wine"
+    ],
+    "tech": [
+      "bold-tech",
+      "darkmatter",
+      "supabase",
+      "perpetuity",
+      "neon-future",
+      "mint-frost"
+    ],
+    "minimal": [
+      "modern-minimal",
+      "graphite",
+      "amber-minimal",
+      "clean-slate",
+      "lavender-mist"
+    ],
+    "luxury": [
+      "elegant-luxury",
+      "amethyst-haze",
+      "ruby-wine",
+      "silk-rose"
+    ],
+    "social": [
+      "twitter",
+      "t3-chat"
+    ],
+    "wellness": [
+      "amethyst-haze",
+      "lavender-mist",
+      "kodama-grove"
+    ],
+    "ocean": [
+      "oceanic",
+      "northern-lights"
+    ],
+    "romantic": [
+      "cherry-blossom",
+      "sunset-glow",
+      "silk-rose"
+    ],
+    "edgy": [
+      "neon-future",
+      "thunder-storm"
+    ]
+  }
+}

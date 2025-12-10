@@ -6,19 +6,10 @@ export const capabilities = {
       uri: "resource:get_components",
       contentType: "text/plain",
     },
-    get_install_script_for_component: {
-      description:
-        "Generate installation script for a specific shadcn/ui component based on package manager",
-      uriTemplate:
-        "resource-template:get_install_script_for_component?packageManager={packageManager}&component={component}",
-      contentType: "text/plain",
-    },
-    get_installation_guide: {
-      description:
-        "Get the installation guide for shadcn/ui based on build tool and package manager",
-      uriTemplate:
-        "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
-      contentType: "text/plain",
+    get_theme_metadata: {
+      description: "Get metadata for all available tweakcn themes",
+      uri: "resource:get_theme_metadata",
+      contentType: "application/json",
     },
   },
   prompts: {
@@ -181,6 +172,50 @@ export const capabilities = {
               "Filter by category (calendar, dashboard, login, sidebar, products)",
           },
         },
+      },
+    },
+    // Tweakcn theme tools
+    get_tweakcn_presets: {
+      description: "Fetch available tweakcn theme presets (list)",
+      inputSchema: {
+        type: "object",
+        properties: {
+          query: { type: "string", description: "Search keywords to filter presets" },
+        },
+      },
+    },
+    apply_tweakcn_theme: {
+      description:
+        "Apply a tweakcn theme preset to the project (writes CSS to global.css).",
+      inputSchema: {
+        type: "object",
+        properties: {
+          presetId: { type: "string", description: "ID of the preset to apply" },
+          query: { type: "string", description: "Search keywords to find a preset" },
+          tailwindVersion: { type: "string", description: "3 or 4", enum: ["3", "4"] },
+          cssPath: { type: "string", description: "Optional explicit path to global.css to write" },
+          dryRun: { type: "boolean", description: "If true, do not write files; just return preview" },
+        },
+        required: [],
+      },
+    },
+    list_themes: {
+      description: "List available tweakcn themes",
+      inputSchema: {
+        type: "object",
+        properties: {
+          query: { type: "string", description: "Search query to filter themes" },
+        },
+      },
+    },
+    get_theme: {
+      description: "Get details of a specific tweakcn theme",
+      inputSchema: {
+        type: "object",
+        properties: {
+          themeName: { type: "string", description: "Name or ID of the theme to retrieve" },
+        },
+        required: ["themeName"],
       },
     },
   },

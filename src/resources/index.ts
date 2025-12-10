@@ -6,6 +6,7 @@
  */
 
 import { logError } from '../utils/logger.js';
+import { handleGetThemeMetadata } from './tweakcn/get-theme-metadata.js';
 
 /**
  * Resource definitions exported to the MCP handler
@@ -17,6 +18,12 @@ export const resources = [
     description: 'List of available shadcn/ui components that can be used in the project',
     uri: 'resource:get_components',
     contentType: 'text/plain',
+  },
+  {
+    name: 'get_theme_metadata',
+    description: 'Returns metadata about the currently configured theme',
+    uri: 'resource:get_theme_metadata',
+    contentType: 'application/json',
   }
 ];
 
@@ -99,4 +106,5 @@ const getComponentsList = async () => {
  */
 export const resourceHandlers = {
   'resource:get_components': getComponentsList,
+  'resource:get_theme_metadata': handleGetThemeMetadata,
 };
