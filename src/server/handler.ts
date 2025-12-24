@@ -111,6 +111,10 @@ export const setupHandlers = (server: Server): void => {
               },
               required: ['componentName'],
             },
+            annotations: {
+              title: "Get Component",
+              readOnlyHint: true,
+            },
           },
           {
             name: 'get_component_demo',
@@ -125,6 +129,10 @@ export const setupHandlers = (server: Server): void => {
               },
               required: ['componentName'],
             },
+            annotations: {
+              title: "Get Component Demo",
+              readOnlyHint: true,
+            },
           },
           {
             name: 'list_components',
@@ -132,6 +140,10 @@ export const setupHandlers = (server: Server): void => {
             inputSchema: {
               type: 'object',
               properties: {},
+            },
+            annotations: {
+              title: "List Components",
+              readOnlyHint: true,
             },
           },
           {
@@ -146,6 +158,10 @@ export const setupHandlers = (server: Server): void => {
                 },
               },
               required: ['componentName'],
+            },
+            annotations: {
+              title: "Get Component Metadata",
+              readOnlyHint: true,
             },
           },
           {
@@ -172,6 +188,10 @@ export const setupHandlers = (server: Server): void => {
                 },
               },
             },
+            annotations: {
+              title: "Get Directory Structure",
+              readOnlyHint: true,
+            },
           },
           {
             name: 'get_block',
@@ -190,6 +210,10 @@ export const setupHandlers = (server: Server): void => {
               },
               required: ['blockName'],
             },
+            annotations: {
+              title: "Get Block",
+              readOnlyHint: true,
+            },
           },
           {
             name: 'list_blocks',
@@ -202,6 +226,10 @@ export const setupHandlers = (server: Server): void => {
                   description: 'Filter by category (calendar, dashboard, login, sidebar, products)',
                 },
               },
+            },
+            annotations: {
+              title: "List Blocks",
+              readOnlyHint: true,
             },
           },
           {
@@ -229,6 +257,10 @@ export const setupHandlers = (server: Server): void => {
                 },
               },
             },
+            annotations: {
+              title: "Apply Theme",
+              destructiveHint: true,
+            },
           },
           {
             name: 'list_themes',
@@ -236,6 +268,10 @@ export const setupHandlers = (server: Server): void => {
             inputSchema: {
               type: 'object',
               properties: {},
+            },
+            annotations: {
+              title: "List Themes",
+              readOnlyHint: true,
             },
           },
           {
@@ -250,6 +286,10 @@ export const setupHandlers = (server: Server): void => {
                 },
               },
               required: ['themeName'],
+            },
+            annotations: {
+              title: "Get Theme",
+              readOnlyHint: true,
             },
           },
         ];
