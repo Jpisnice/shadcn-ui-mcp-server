@@ -6,6 +6,7 @@
  */
 
 import { logError } from '../utils/logger.js';
+import { getAxiosImplementation } from '../utils/framework.js';
 import { handleGetThemeMetadata } from './tweakcn/get-theme-metadata.js';
 
 /**
@@ -33,59 +34,11 @@ export const resources = [
  */
 const getComponentsList = async () => {
   try {
-    // List of available components in shadcn/ui
-    // This hardcoded list can be updated in the future if needed
-    const components = [
-      "accordion",
-      "alert",
-      "alert-dialog",
-      "aspect-ratio",
-      "avatar",
-      "badge",
-      "breadcrumb",
-      "button",
-      "calendar",
-      "card",
-      "carousel",
-      "checkbox",
-      "collapsible",
-      "command",
-      "context-menu",
-      "data-table",
-      "date-picker",
-      "dialog",
-      "drawer",
-      "dropdown-menu",
-      "form",
-      "hover-card",
-      "input",
-      "label",
-      "menubar",
-      "navigation-menu",
-      "pagination",
-      "popover",
-      "progress",
-      "radio-group",
-      "resizable",
-      "scroll-area",
-      "select",
-      "separator",
-      "sheet",
-      "skeleton",
-      "slider",
-      "sonner",
-      "switch",
-      "table",
-      "tabs",
-      "textarea",
-      "toast",
-      "toggle",
-      "toggle-group",
-      "tooltip"
-    ];
+    const axios = await getAxiosImplementation();
+    const components = await axios.getAvailableComponents();
     
     return {
-      content: JSON.stringify(components, null, 2),
+      content: JSON.stringify(components.sort(), null, 2),
       contentType: 'application/json',
     };
   } catch (error) {

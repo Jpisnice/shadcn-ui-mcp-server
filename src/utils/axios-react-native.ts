@@ -143,12 +143,38 @@ async function getAvailableComponents(): Promise<string[]> {
  */
 function getFallbackComponents(): string[] {
   return [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "aspect-ratio",
+    "avatar",
+    "badge",
     "button",
-    "input",
     "card",
+    "checkbox",
+    "collapsible",
+    "context-menu",
+    "dialog",
+    "dropdown-menu",
+    "hover-card",
+    "icon",
+    "input",
+    "label",
+    "menubar",
+    "native-only-animated-view",
+    "popover",
+    "progress",
+    "radio-group",
+    "select",
+    "separator",
+    "skeleton",
+    "switch",
+    "tabs",
     "text",
-    "view",
-    // Add more as needed based on the actual registry
+    "textarea",
+    "toggle",
+    "toggle-group",
+    "tooltip",
   ];
 }
 
