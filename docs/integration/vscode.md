@@ -56,6 +56,49 @@ Integrate the shadcn/ui MCP Server with VS Code for seamless component access.
 }
 ```
 
+### Method 3: Using native VSCode MCP Servers (works with Copilot Chat)
+
+1. **Configure MCP Server**:
+   - <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+   - Search for "MCP: Add Server..."
+   - Choose "NPM Package"
+   - Paste this repo name \ npm package `@jpisnice/shadcn-ui-mcp-server`
+   - It will ask automatically about:
+     - How it should be installed (global, remote (WSL for example), workspace-only)
+     - GitHub API Token
+     - Framework
+     - Transport Mode
+
+Your VSCode MCP Server configuration (`mcp.json`) should look like:
+
+```json
+{
+	"servers": {
+		"shadcn-ui-mcp-server": {
+			"command": "npx",
+			"args": [
+				"@jpisnice/shadcn-ui-mcp-server@2.0.0",
+				"--fremaework",
+				"react",
+				"--ui-library",
+				"radix"
+			],
+			"env": {
+				"GITHUB_PERSONAL_ACCESS_TOKEN": "${input:github_token}"
+			},
+			"type": "stdio"
+		}
+	},
+	"inputs": [
+		{
+			"id": "github_token",
+			"type": "promptString",
+			"description": "GitHub Personal Access Token (optional, recommended for higher rate limits)"
+		}
+	]
+}
+```
+
 ## 🎨 Framework-Specific Configurations
 
 ### React (Default)
