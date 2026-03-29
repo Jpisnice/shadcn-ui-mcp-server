@@ -286,3 +286,8 @@ MIT License - see [LICENSE](LICENSE) for details.
 **Made with ❤️ by [Janardhan Polle](https://github.com/Jpisnice)**
 
 **Star ⭐ this repo if you find it helpful!**
+
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/jpisnice-shadcn-ui-mcp-server).
+
