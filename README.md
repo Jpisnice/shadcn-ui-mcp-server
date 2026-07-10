@@ -166,11 +166,22 @@ npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 ```
 
 ### 3. Integrate with Your Editor
+- **Autohand Code**: See [Autohand Code Integration](#-autohand-code-integration) below
 - **Claude Code**: See [Claude Code Integration](#-claude-code-integration) below
 - **VS Code**: [docs/integration/vscode.md](docs/integration/vscode.md)
 - **Cursor**: [docs/integration/cursor.md](docs/integration/cursor.md)
 - **Claude Desktop**: [docs/integration/claude-desktop.md](docs/integration/claude-desktop.md)
 - **Continue.dev**: [docs/integration/continue.md](docs/integration/continue.md)
+
+## 💻 Autohand Code Integration
+
+Use the [Autohand Code CLI](https://github.com/autohandai/code-cli/) to add the shadcn/ui MCP server:
+
+```bash
+autohand mcp add shadcn bunx -y @jpisnice/shadcn-ui-mcp-server --github-api-key YOUR_TOKEN
+```
+
+Add `--scope project` before `shadcn` to save the server in the current project's `.autohand` configuration instead of your user configuration.
 
 ## 💻 Claude Code Integration
 
