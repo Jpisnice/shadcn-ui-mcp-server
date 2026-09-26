@@ -26,7 +26,7 @@ import {
   resourceTemplates,
 } from "../resource-templates/index.js";
 import { z } from "zod";
-import { validateAndSanitizeParams } from '../utils/validation.js';
+import { validateAndSanitizeParams, validateRequest, getValidationSchema } from '../utils/validation.js';
 import { circuitBreakers } from '../utils/circuit-breaker.js';
 import { logError, logInfo } from '../utils/logger.js';
 
@@ -383,9 +383,25 @@ export const setupHandlers = (server: Server): void => {
           throw new Error(`Tool not found: ${name}`);
         }
 
+        // Validate the tool's own arguments (the call_tool schema above only
+        // checks the request envelope). Invalid arguments are returned as a
+        // tool error the calling agent can read and correct.
+        let toolArgs = params || {};
+        const argsSchema = getValidationSchema(name);
+        if (argsSchema) {
+          try {
+            toolArgs = validateRequest(argsSchema, toolArgs);
+          } catch (error) {
+            return {
+              content: [{ type: "text", text: `Invalid arguments for ${name}: ${error instanceof Error ? error.message : String(error)}` }],
+              isError: true
+            };
+          }
+        }
+
         // Execute handler with circuit breaker protection
         const result = await circuitBreakers.external.execute(() => 
-          Promise.resolve(handler(params || {}))
+          Promise.resolve(handler(toolArgs))
         );
         
         return result;
