@@ -1,4 +1,4 @@
-# Test script for shadcn-ui-mcp-server (Windows PowerShell)
+﻿# Test script for shadcn-ui-mcp-server (Windows PowerShell)
 # This script validates that the package is ready for npm publishing
 
 Write-Host "🧪 Testing shadcn-ui-mcp-server package..." -ForegroundColor Cyan
