@@ -1,0 +1,24 @@
+{
+  "name": "shadcn-ui-mcp",
+  "version": "0.1.0",
+  "description": "shadcn/ui component context and usage from Codex via MCP",
+  "author": {
+    "name": "Jpisnice",
+    "url": "https://github.com/Jpisnice/shadcn-ui-mcp-server"
+  },
+  "homepage": "https://github.com/Jpisnice/shadcn-ui-mcp-server",
+  "repository": "https://github.com/Jpisnice/shadcn-ui-mcp-server",
+  "keywords": [
+    "mcp",
+    "codex"
+  ],
+  "mcpServers": "./.mcp.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "shadcn/ui MCP",
+    "shortDescription": "shadcn/ui component context and usage from Codex via MCP",
+    "longDescription": "MCP server to give LLMs context about shadcn/ui component structure, usage and installation, compatible with React, Svelte 5, Vue and React Native.",
+    "category": "Development",
+    "websiteURL": "https://github.com/Jpisnice/shadcn-ui-mcp-server"
+  }
+}
