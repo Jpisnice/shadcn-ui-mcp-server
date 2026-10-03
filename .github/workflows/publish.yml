@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm
     permissions:
-      contents: read
+      contents: write # attach release assets
       id-token: write # npm trusted publishing (OIDC) + provenance
 
     steps:
@@ -39,6 +39,11 @@ jobs:
           PKG_VERSION=$(node -p "require('./package.json').version")
           if [ "${TAG#v}" != "$PKG_VERSION" ]; then
             echo "❌ Release tag $TAG does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+          MANIFEST_VERSION=$(node -p "require('./manifest.json').version")
+          if [ "$MANIFEST_VERSION" != "$PKG_VERSION" ]; then
+            echo "❌ manifest.json version $MANIFEST_VERSION does not match package.json version $PKG_VERSION"
             exit 1
           fi
           echo "✅ Publishing version $PKG_VERSION"
@@ -68,3 +73,14 @@ jobs:
       # replace it and lifecycle scripts are skipped here.
       - name: Publish to npm
         run: npm publish --access public --provenance --ignore-scripts --tag ${{ steps.version.outputs.dist_tag }}
+
+      - name: Build release assets
+        run: |
+          npx --yes @anthropic-ai/mcpb pack . shadcn-ui-mcp-server.mcpb
+          npm pack --ignore-scripts
+
+      - name: Attach assets to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" shadcn-ui-mcp-server.mcpb jpisnice-shadcn-ui-mcp-server-*.tgz --clobber
