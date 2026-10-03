@@ -77,8 +77,8 @@ Your VSCode MCP Server configuration (`mcp.json`) should look like:
 		"shadcn-ui-mcp-server": {
 			"command": "npx",
 			"args": [
-				"@jpisnice/shadcn-ui-mcp-server@2.0.0",
-				"--fremaework",
+				"@jpisnice/shadcn-ui-mcp-server@3.0.0",
+				"--framework",
 				"react",
 				"--ui-library",
 				"radix"

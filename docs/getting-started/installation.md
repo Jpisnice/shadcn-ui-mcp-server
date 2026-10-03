@@ -39,12 +39,20 @@ shadcn-ui-mcp-server [options]
 Options:
   --github-api-key, -g <token>    GitHub Personal Access Token
   --framework, -f <framework>     Framework to use: 'react', 'svelte', 'vue', or 'react-native' (default: react)
-  --help, -h                      Show help message
+  --ui-library <name>             UI primitives: radix (default) or base (React only)
+  --mode, -m <mode>               Transport: stdio (default), http or dual
+  --port, -p <port>               HTTP port (default: 7423)
+  --host, -h <host>               HTTP bind address (default: 0.0.0.0)
+  --cors <origins>                Comma-separated allowed CORS origins
+  --protocol <policy>             any (default; 2026-07-28 + 2025-era clients) or modern (2026-07-28 only)
+  --help                          Show help message
   --version, -v                   Show version information
 
 Environment Variables:
   GITHUB_PERSONAL_ACCESS_TOKEN    Alternative way to provide GitHub token
   FRAMEWORK                       Framework to use: 'react', 'svelte', 'vue', or 'react-native' (default: react)
+  UI_LIBRARY, MCP_TRANSPORT_MODE, MCP_PORT, MCP_HOST, MCP_CORS_ORIGINS, MCP_PROTOCOL
+                                  Equivalents of the options above
 
 Examples:
   npx @jpisnice/shadcn-ui-mcp-server --help

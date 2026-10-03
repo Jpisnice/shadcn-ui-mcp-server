@@ -20,6 +20,19 @@ Complete reference for the shadcn/ui MCP Server tools and capabilities.
 
 - [get_directory_structure](get-directory-structure.md) - Explore repository structure
 
+### Theme Tools
+
+- `list_themes` - List available tweakcn themes
+- `get_theme` - Get details of a specific tweakcn theme
+- `apply_theme` - Apply a tweakcn theme preset to the project (writes CSS; supports `dryRun`)
+
+## 🧩 Protocol Features
+
+- **MCP spec 2026-07-28**, with fallback for 2025-era clients (`--protocol any`, the default). See the [Modern Protocol Guide](../getting-started/modern-protocol.md)
+- **Argument completion** for prompt and resource-template arguments (component names, package managers, build tools)
+- **Cache hints** (`ttlMs` / `cacheScope`) on list and read results
+- **Errors:** unknown tools, prompts and resources return `-32602`; tool execution failures return a result with `isError: true` so the model can self-correct
+
 ## 🔧 Tool Usage Examples
 
 ### Component Tools

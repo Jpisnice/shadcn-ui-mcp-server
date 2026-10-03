@@ -59,10 +59,32 @@ We welcome contributions of all kinds—bug reports, feature requests, code, tes
    ```bash
    npm test
    ```
-4. **Start the server locally**
+4. **Start the dev server** (Streamable HTTP, restarts on save)
    ```bash
-   npx @jpisnice/shadcn-ui-mcp-server --help
+   npm run dev
    ```
+   This runs `src/` directly with `tsx watch` and serves MCP at
+   `http://127.0.0.1:7423/mcp`, bound to localhost only. It runs with
+   `--protocol modern`, so only the 2026-07-28 handshake is accepted: set your
+   client's protocol era (e.g. in the Inspector) to **Modern**. The published
+   default (`--protocol any`) also serves 2025-era clients; if your client
+   can't speak 2026-07-28 yet, run `npm run dev -- --protocol any`. Because the protocol
+   is stateless, connected clients keep working across restarts with no
+   reconnect. `tsx` does not type-check, so run `npm run typecheck` (or
+   `npm run dev:watch` in a second terminal) to catch type errors.
+
+5. **Connect a client to the dev server**
+   ```bash
+   # Claude Code (local scope: only you, only this repo, not committed)
+   claude mcp add --transport http --scope local shadcn-ui-dev http://127.0.0.1:7423/mcp
+
+   # MCP Inspector: choose "Streamable HTTP" and enter the URL above
+   npx @modelcontextprotocol/inspector
+   ```
+   Don't point the committed `.mcp.json` at localhost. It ships with the
+   Codex plugin and must keep referencing the published package.
+
+   To test the stdio transport instead, use `npm run dev:stdio`.
 
 ---
 

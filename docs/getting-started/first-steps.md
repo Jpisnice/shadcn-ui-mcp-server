@@ -76,7 +76,7 @@ Once the server is running, you can ask your AI assistant to:
 ### Get Block with Components
 
 ```
-"Get the calendar-01 block with all its component files"
+"Get the dashboard-01 block with all its component files"
 ```
 
 ## 🔍 Exploring the Repository
@@ -189,7 +189,7 @@ You'll know it's working when:
 ### Server Won't Start
 ```bash
 # Check Node.js version
-node --version  # Should be 18+
+node --version  # Should be 20+
 
 # Check if npx is available
 npx --version
