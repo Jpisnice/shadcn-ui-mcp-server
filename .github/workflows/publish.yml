@@ -1,0 +1,70 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish ${{ github.event.release.tag_name }}
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing (OIDC) + provenance
+
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Node 24 ships npm 11, which is required for trusted publishing
+          node-version: '24.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Verify tag matches package.json version
+        id: version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "${TAG#v}" != "$PKG_VERSION" ]; then
+            echo "❌ Release tag $TAG does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+          echo "✅ Publishing version $PKG_VERSION"
+
+          # Prereleases (e.g. 3.1.0-beta.1) go to the "next" dist-tag
+          if [[ "$PKG_VERSION" == *-* ]]; then
+            echo "dist_tag=next" >> "$GITHUB_OUTPUT"
+          else
+            echo "dist_tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: |
+          npm run clean
+          npm run build
+
+      - name: Test package
+        run: bash test-package.sh
+
+      - name: Validate npm pack
+        run: npm pack --dry-run
+
+      # prepublishOnly calls PowerShell-only scripts, so the checks above
+      # replace it and lifecycle scripts are skipped here.
+      - name: Publish to npm
+        run: npm publish --access public --provenance --ignore-scripts --tag ${{ steps.version.outputs.dist_tag }}
