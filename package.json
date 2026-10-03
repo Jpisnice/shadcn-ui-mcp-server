@@ -1,6 +1,6 @@
 {
   "name": "@jpisnice/shadcn-ui-mcp-server",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A Model Context Protocol (MCP) server for shadcn/ui components, providing AI assistants with access to component source code, demos, blocks, and metadata.",
   "type": "module",
   "main": "./build/index.js",
@@ -17,7 +17,10 @@
     "clean": "node -e \"const fs=require('fs');if(fs.existsSync('build'))fs.rmSync('build',{recursive:true,force:true})\"",
     "prepublishOnly": "npm run security:all && npm run test && npm run clean && npm run build",
     "start": "node build/index.js",
-    "dev": "tsc && node build/index.js",
+    "dev": "tsx watch src/index.ts --mode http --host 127.0.0.1 --protocol modern",
+    "dev:stdio": "tsc && node build/index.js",
+    "dev:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
     "test": "powershell -ExecutionPolicy Bypass -File test-package.ps1",
     "examples": "./examples.sh",
     "security:audit": "npm audit --audit-level=moderate",
@@ -56,10 +59,11 @@
     "url": "https://github.com/Jpisnice/shadcn-ui-mcp-server/issues"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.24.0",
+    "@modelcontextprotocol/node": "^2.1.1",
+    "@modelcontextprotocol/server": "^2.3.0",
     "axios": "^1.15.0",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
@@ -67,7 +71,7 @@
     "joi": "^17.13.3",
     "uuid": "^10.0.0",
     "winston": "^3.15.0",
-    "zod": "^3.24.2"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -76,6 +80,7 @@
     "@types/uuid": "^10.0.0",
     "license-checker": "^25.0.1",
     "snyk": "^1.1300.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.2"
   }
 }

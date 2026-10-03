@@ -1,4 +1,3 @@
-import { setupHandlers } from "./handler.js"
 import {
   validateFrameworkSelection,
   getAxiosImplementation,
@@ -6,14 +5,14 @@ import {
 import { logError, logInfo, logWarning } from "../utils/logger.js"
 import { parseArgs } from "../cli/args.js"
 import { readVersion } from "../server/version.js"
-import { createServer } from "../server/createServer.js"
-import { TransportManager, TransportMode } from "./transport.js"
+import { createServerFactory } from "../server/createServer.js"
+import { TransportManager, resolveTransportMode, resolveProtocolPolicy } from "./transport.js"
 
 export async function start() {
   try {
     logInfo("Starting Shadcn UI MCP Server...")
 
-    const { githubApiKey, mode = 'stdio', port, host, cors } = parseArgs()
+    const { githubApiKey, mode = 'stdio', port, host, cors, protocol } = parseArgs()
 
     validateFrameworkSelection()
 
@@ -26,27 +25,27 @@ export async function start() {
     }
 
     const version = await readVersion("1.0.3")
-    const server = createServer(version)
-
-    setupHandlers(server)
+    const serverFactory = createServerFactory(version)
 
     const transportManager = new TransportManager({
-      mode: mode as TransportMode,
-      sse: {
+      mode: resolveTransportMode(mode),
+      protocol: resolveProtocolPolicy(protocol),
+      http: {
         port: port ? parseInt(port) : 7423,
         host: host || '0.0.0.0',
         corsOrigin: cors ? cors.split(',') : true,
-        path: '/sse'
+        path: '/mcp'
       }
     })
 
-    await transportManager.initialize(server)
+    await transportManager.initialize(serverFactory, { name: "shadcn-ui-mcp-server", version })
 
     const status = transportManager.getStatus()
     logInfo(`Server started successfully - Mode: ${status.mode}`)
+    logInfo(`Protocol: ${status.protocol === 'modern' ? '2026-07-28 only (2025-era clients rejected)' : '2026-07-28 with 2025-era fallback'}`)
 
-    if (status.sse.active) {
-      logInfo(`SSE endpoint: http://${host || '0.0.0.0'}:${port || 7423}/sse`)
+    if (status.http.active) {
+      logInfo(`MCP endpoint: http://${host || '0.0.0.0'}:${port || 7423}/mcp`)
     }
 
     process.on('SIGINT', async () => {

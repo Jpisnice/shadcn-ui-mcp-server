@@ -6,25 +6,25 @@
  */
 
 import { logError } from '../utils/logger.js';
-import { getAxiosImplementation } from '../utils/framework.js';
+import { getComponentNames } from '../utils/framework.js';
 import { handleGetThemeMetadata } from './tweakcn/get-theme-metadata.js';
 
 /**
  * Resource definitions exported to the MCP handler
- * Each resource has a name, description, uri and contentType
+ * Each resource has a name, description, uri and mimeType
  */
 export const resources = [
   {
     name: 'get_components',
     description: 'List of available shadcn/ui components that can be used in the project',
     uri: 'resource:get_components',
-    contentType: 'text/plain',
+    mimeType: 'application/json',
   },
   {
     name: 'get_theme_metadata',
     description: 'Returns metadata about the currently configured theme',
     uri: 'resource:get_theme_metadata',
-    contentType: 'application/json',
+    mimeType: 'application/json',
   }
 ];
 
@@ -34,11 +34,10 @@ export const resources = [
  */
 const getComponentsList = async () => {
   try {
-    const axios = await getAxiosImplementation();
-    const components = await axios.getAvailableComponents();
-    
+    const components = await getComponentNames();
+
     return {
-      content: JSON.stringify(components.sort(), null, 2),
+      content: JSON.stringify([...components].sort(), null, 2),
       contentType: 'application/json',
     };
   } catch (error) {

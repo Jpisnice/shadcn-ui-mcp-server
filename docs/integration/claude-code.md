@@ -72,7 +72,7 @@ claude mcp add shadcn-react-native -- bunx -y @jpisnice/shadcn-ui-mcp-server --f
 
 ```
 "Get the dashboard-01 block implementation"
-"Show me the calendar-01 block with all components"
+"Show me the dashboard-01 block with all components"
 "List all available shadcn/ui blocks"
 ```
 

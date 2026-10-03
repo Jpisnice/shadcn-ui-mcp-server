@@ -1,5 +1,5 @@
-# Use Node.js 18 Alpine as base image
-FROM node:18-alpine
+# Use Node.js 22 Alpine as base image (MCP SDK v2 requires Node 20+)
+FROM node:22-alpine
 
 # Set working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Remove dev dependencies after build
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
@@ -27,7 +27,7 @@ RUN addgroup -g 1001 -S nodejs && \
 RUN chown -R mcpserver:nodejs /app
 USER mcpserver
 
-# Expose port for SSE transport
+# Expose port for Streamable HTTP transport (/mcp)
 EXPOSE 7423
 
 # Add health check
@@ -41,10 +41,10 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     req.on('error', () => process.exit(1)); \
     req.end();"
 
-# Default to SSE mode for containerized deployment
-ENV MCP_TRANSPORT_MODE=sse
+# Default to HTTP mode for containerized deployment
+ENV MCP_TRANSPORT_MODE=http
 ENV MCP_HOST=0.0.0.0
 ENV MCP_PORT=7423
 
 # Start the server
-CMD ["npm", "start", "--", "--mode", "sse", "--host", "0.0.0.0", "--port", "7423"]
+CMD ["npm", "start", "--", "--mode", "http", "--host", "0.0.0.0", "--port", "7423"]

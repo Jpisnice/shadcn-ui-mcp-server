@@ -8,6 +8,7 @@ Welcome to the shadcn/ui MCP Server! This section will help you get up and runni
 - [GitHub Token Setup](github-token.md) - Setting up GitHub API access
 - [First Steps](first-steps.md) - Your first component request
 - [Framework Selection](framework-selection.md) - Choosing between React, Svelte, Vue, and React Native
+- [Modern Protocol](modern-protocol.md) - Using the MCP 2026-07-28 protocol instead of the legacy handshake
 
 ## 🚀 Quick Start (5 minutes)
 
@@ -18,7 +19,7 @@ Welcome to the shadcn/ui MCP Server! This section will help you get up and runni
 
 ## 🎯 Prerequisites
 
-- Node.js 18+ installed
+- Node.js 20+ installed
 - Basic familiarity with command line
 - GitHub account (for optimal performance)
 

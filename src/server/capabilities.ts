@@ -3,6 +3,7 @@ export const capabilities = {
   resources: {},
   prompts: {},
   tools: {},
+  completions: {},
 };
 
 // Resource definitions
@@ -153,14 +154,14 @@ export const toolDefinitions = {
   },
   get_block: {
     description:
-      "Get source code for a specific shadcn/ui v4 block (e.g., calendar-01, dashboard-01)",
+      "Get source code for a specific shadcn/ui v4 block (e.g., dashboard-01, login-02, sidebar-01)",
     inputSchema: {
       type: "object",
       properties: {
         blockName: {
           type: "string",
           description:
-            'Name of the block (e.g., "calendar-01", "dashboard-01", "login-02")',
+            'Name of the block (e.g., "dashboard-01", "login-02", "sidebar-01")',
         },
         includeComponents: {
           type: "boolean",

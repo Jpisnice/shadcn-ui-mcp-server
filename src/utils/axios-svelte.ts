@@ -10,6 +10,9 @@ const BLOCKS = `${REGISTRY_PATH}/blocks`;
 
 // GitHub API for accessing repository structure and metadata
 const githubApi = new Axios({
+    // The bare Axios constructor has no default validateStatus, so non-2xx
+    // responses (404, 403 rate limit) would otherwise resolve as success.
+    validateStatus: (status: number) => status >= 200 && status < 300,
     baseURL: "https://api.github.com",
     headers: {
         "Content-Type": "application/json",
@@ -31,6 +34,9 @@ const githubApi = new Axios({
 
 // GitHub Raw for directly fetching file contents
 const githubRaw = new Axios({
+    // The bare Axios constructor has no default validateStatus, so non-2xx
+    // responses (404, 403 rate limit) would otherwise resolve as success.
+    validateStatus: (status: number) => status >= 200 && status < 300,
     baseURL: `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}`,
     headers: {
         "User-Agent": "Mozilla/5.0 (compatible; ShadcnUiMcpServer/1.0.0)",
@@ -522,7 +528,7 @@ async function buildDirectoryTreeWithFallback(
 
 /**
  * Fetch block code from the v4 blocks directory
- * @param blockName Name of the block (e.g., "calendar-01", "dashboard-01")
+ * @param blockName Name of the block (e.g., "dashboard-01", "login-02")
  * @param includeComponents Whether to include component files for complex blocks
  * @returns Promise with block code and structure
  */

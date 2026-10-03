@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server.svg)](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MCP spec 2026-07-28](https://img.shields.io/badge/MCP_spec-2026--07--28-blue)](https://modelcontextprotocol.io/specification/2026-07-28)
 
 [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/Jpisnice/shadcn-ui-mcp-server)](https://archestra.ai/mcp-catalog/jpisnice__shadcn-ui-mcp-server)
 
@@ -17,8 +18,9 @@ A Model Context Protocol (MCP) server that provides AI assistants with comprehen
 - **🏗️ Blocks Support** - Complete block implementations (dashboards, calendars, forms)
 - **📋 Metadata Access** - Dependencies, descriptions, and configuration details
 - **🔍 Directory Browsing** - Explore repository structures
-- **⚡ Smart Caching** - Efficient GitHub API integration with rate limit handling
-- **🌐 SSE Transport** - Server-Sent Events support for multi-client deployments
+- **⚡ Smart Caching** - Efficient GitHub API integration with rate limit handling, plus protocol cache hints (`ttlMs`/`cacheScope`) on list and read results
+- **⌨️ Argument Completion** - Autocomplete for prompt and resource-template arguments (component names, package managers, build tools, and more)
+- **🌐 Streamable HTTP Transport** - Stateless `/mcp` endpoint for multi-client deployments (MCP spec 2026-07-28)
 - **🐳 Docker Ready** - Production-ready containerization with Docker Compose
 
 ## 🚀 Quick Start
@@ -54,26 +56,28 @@ Download and double-click the `.mcpb` file for instant installation:
 
 > **References:** [Anthropic Desktop Extensions](https://www.anthropic.com/engineering/desktop-extensions) | [Building MCPB](https://support.claude.com/en/articles/12922929-building-desktop-extensions-with-mcpb)
 
-## 🌐 SSE Transport & Docker Deployment
+## 🌐 HTTP Transport & Docker Deployment
 
-Run the server with **Server-Sent Events (SSE)** transport for multi-client support and production deployments:
+The server implements the **2026-07-28 MCP specification** (via MCP TypeScript SDK v2) and stays compatible with 2025-era clients. To make your client use the modern protocol, or to require it, see the [Modern Protocol Guide](docs/getting-started/modern-protocol.md). Besides stdio, it can serve **Streamable HTTP** at a single stateless `/mcp` endpoint for multi-client and production deployments:
 
-### Quick Start with SSE
+### Quick Start with HTTP
 ```bash
-# SSE mode (supports multiple concurrent connections)
-node build/index.js --mode sse --port 7423
+# HTTP mode (stateless, supports many concurrent clients)
+node build/index.js --mode http --port 7423
 
 # Docker Compose (production ready)
 docker-compose up -d
 
 # Connect with Claude Code
-claude mcp add --scope user --transport sse shadcn-mcp-server http://localhost:7423/sse
+claude mcp add --scope user --transport http shadcn-mcp-server http://localhost:7423/mcp
 ```
 
 ### Transport Modes
 - **`stdio`** (default) - Standard input/output for CLI usage
-- **`sse`** - Server-Sent Events for HTTP-based connections
-- **`dual`** - Both stdio and SSE simultaneously
+- **`http`** - Streamable HTTP at `/mcp`
+- **`dual`** - Both stdio and HTTP simultaneously
+
+> The legacy SSE transport (`/sse` + `/message`) was removed. `--mode sse` is still accepted as a deprecated alias for `http`.
 
 ### Docker Examples
 ```bash
@@ -89,10 +93,11 @@ curl http://localhost:7423/health
 ```
 
 ### Environment Variables
-- `MCP_TRANSPORT_MODE` - Transport mode (stdio|sse|dual)
-- `MCP_PORT` - SSE server port (default: 7423 - SHADCN on keypad!)
+- `MCP_TRANSPORT_MODE` - Transport mode (stdio|http|dual)
+- `MCP_PORT` - HTTP server port (default: 7423 - SHADCN on keypad!)
 - `MCP_HOST` - Host binding (default: 0.0.0.0)
 - `MCP_CORS_ORIGINS` - CORS origins (comma-separated)
+- `MCP_PROTOCOL` - Protocol eras to accept: `any` (default; 2026-07-28 plus 2025-era fallback) or `modern` (2026-07-28 only). CLI: `--protocol`
 - `GITHUB_PERSONAL_ACCESS_TOKEN` - GitHub API token
 - `UI_LIBRARY` - UI primitive library: `radix` (default) or `base` (React only)
 
@@ -192,16 +197,16 @@ Add `--scope project` before `shadcn` to save the server in the current project'
 claude mcp add shadcn -- bunx -y @jpisnice/shadcn-ui-mcp-server --github-api-key YOUR_TOKEN
 ```
 
-### SSE Transport
+### HTTP Transport
 
-For production deployments with SSE transport:
+For production deployments with the Streamable HTTP transport:
 
 ```bash
-# Start server in SSE mode
-node build/index.js --mode sse --port 7423
+# Start server in HTTP mode
+node build/index.js --mode http --port 7423
 
 # Connect with Claude Code
-claude mcp add --scope user --transport sse shadcn-mcp-server http://localhost:7423/sse
+claude mcp add --scope user --transport http shadcn-mcp-server http://localhost:7423/mcp
 ```
 
 ### Framework-Specific Commands
@@ -213,7 +218,7 @@ See [Claude Code Integration Guide](docs/integration/claude-code.md) for framewo
 ## 🎯 Use Cases
 
 - **AI-Powered Development** - Let AI assistants build UIs with shadcn/ui
-- **Multi-Client Deployments** - SSE transport supports multiple concurrent connections
+- **Multi-Client Deployments** - Stateless HTTP transport scales horizontally without sticky sessions
 - **Production Environments** - Docker Compose ready with health checks and monitoring
 - **Component Discovery** - Explore available components and their usage
 - **Multi-Framework Learning** - Compare React, Svelte, Vue, and React Native implementations
@@ -234,7 +239,7 @@ npx @jpisnice/shadcn-ui-mcp-server
 
 ### Prerequisites
 
-- Node.js >= 18.0.0
+- Node.js >= 20.0.0
 - npm or pnpm
 
 ### Build Steps
@@ -274,7 +279,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed packaging instructions.
 
 - 📖 [Full Documentation](docs/)
 - 🚀 [Getting Started Guide](docs/getting-started/)
-- 🌐 [SSE Transport & Docker Guide](SSE_IMPLEMENTATION.md)
+- 🌐 [HTTP Transport & Docker Guide](HTTP_TRANSPORT.md)
+- 🧭 [Modern Protocol Guide (2026-07-28)](docs/getting-started/modern-protocol.md)
+- 📝 [Changelog](CHANGELOG.md)
 - 🎨 [Framework Comparison](docs/frameworks/)
 - 🔧 [API Reference](docs/api/)
 - 🐛 [Troubleshooting](docs/troubleshooting/)

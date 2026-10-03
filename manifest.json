@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "shadcn-ui-mcp-server",
   "display_name": "shadcn/ui MCP Server",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "MCP server providing AI assistants with comprehensive access to shadcn/ui v4 components, blocks, and demos for React, Svelte, Vue, and React Native",
   "author": {
     "name": "Janardhan Polle",
@@ -16,6 +16,11 @@
   "documentation": "https://github.com/Jpisnice/shadcn-ui-mcp-server#readme",
   "support": "https://github.com/Jpisnice/shadcn-ui-mcp-server/issues",
   "icon": "icon.png",
+  "compatibility": {
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  },
   "server": {
     "type": "node",
     "entry_point": "build/index.js",
@@ -43,7 +48,10 @@
     {"name": "get_component_metadata", "description": "Get component metadata and dependencies"},
     {"name": "list_blocks", "description": "List available shadcn/ui blocks"},
     {"name": "get_block", "description": "Get block implementation"},
-    {"name": "get_directory_structure", "description": "Browse repository file structure"}
+    {"name": "get_directory_structure", "description": "Browse repository file structure"},
+    {"name": "apply_theme", "description": "Apply a tweakcn theme preset to the project"},
+    {"name": "list_themes", "description": "List available tweakcn themes"},
+    {"name": "get_theme", "description": "Get details of a specific tweakcn theme"}
   ],
   "prompts": [
     {

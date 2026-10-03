@@ -35,11 +35,13 @@ This will return:
 "Get the analytics dashboard block"
 ```
 
-#### Calendars
+#### Calendars (Svelte)
+
+> The React and Vue registries no longer ship calendar blocks; use the `calendar` component there.
 
 ```
-"Get the calendar-01 block"
-"Show me the calendar-02 block"
+"Get the Svelte calendar-01 block"
+"Show me the Svelte calendar-02 block"
 "Get the event calendar block"
 ```
 
@@ -84,7 +86,7 @@ This will return:
 
 ```
 "Get the dashboard-01 block with all its component files"
-"Show me the calendar-01 block with components"
+"Show me the sidebar-01 block with components"
 "Get the login-02 block with all dependencies"
 ```
 
@@ -94,7 +96,7 @@ This will return:
 
 ```
 "Get the React dashboard-01 block"
-"Show me the React calendar-01 block"
+"Show me the React sidebar-01 block"
 "Get the React login-02 block"
 ```
 
@@ -110,7 +112,7 @@ This will return:
 
 ```
 "Get the Vue dashboard-01 block"
-"Show me the Vue calendar-01 block"
+"Show me the Vue sidebar-01 block"
 "Get the Vue login-02 block"
 ```
 
@@ -144,7 +146,7 @@ Note: Blocks are currently not available for React Native. The tools return an i
 
 ```
 "Help me build a calendar using shadcn/ui blocks"
-"Get the calendar-01 block implementation"
+"Get the dashboard-01 block implementation"
 "Show me how to customize the calendar"
 ```
 
@@ -162,7 +164,7 @@ Note: Blocks are currently not available for React Native. The tools return an i
 
 ```
 "Show me the structure of the dashboard-01 block"
-"Explain how the calendar-01 block works"
+"Explain how the dashboard-01 block works"
 "Show me the components used in the login-02 block"
 ```
 
@@ -170,7 +172,7 @@ Note: Blocks are currently not available for React Native. The tools return an i
 
 ```
 "Show me how to customize the dashboard-01 block"
-"Get examples of calendar-01 block customization"
+"Get examples of dashboard-01 block customization"
 "Show me how to modify the login-02 block"
 ```
 
@@ -178,7 +180,7 @@ Note: Blocks are currently not available for React Native. The tools return an i
 
 ```
 "What are the dependencies for the dashboard-01 block?"
-"Show me what the calendar-01 block needs"
+"Show me what the dashboard-01 block needs"
 "Get the requirements for the login-02 block"
 ```
 
