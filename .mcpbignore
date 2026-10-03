@@ -42,3 +42,11 @@ __tests__/
 *.test.*
 *.spec.*
 coverage/
+
+# Local tooling and other plugin formats
+.claude/
+.codex-plugin/
+.mcp.json
+skills/
+*.mcpb
+*.tgz
