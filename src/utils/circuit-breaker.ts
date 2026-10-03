@@ -1,5 +1,7 @@
 
 
+import { ProtocolError } from '@modelcontextprotocol/server';
+
 /**
  * Circuit Breaker states
  */
@@ -39,7 +41,10 @@ export class CircuitBreaker {
   /**
    * Execute a function with circuit breaker protection
    */
-  async execute<T>(fn: () => Promise<T>): Promise<T> {
+  async execute<T>(
+    fn: () => Promise<T>,
+    countsAsFailure: (error: unknown) => boolean = () => true
+  ): Promise<T> {
     if (this.isOpen()) {
       throw new Error('Service temporarily unavailable due to previous failures');
     }
@@ -49,7 +54,9 @@ export class CircuitBreaker {
       this.onSuccess();
       return result;
     } catch (error) {
-      this.onFailure();
+      if (countsAsFailure(error)) {
+        this.onFailure();
+      }
       throw error;
     }
   }
@@ -122,6 +129,18 @@ export class CircuitBreaker {
     this.successes = 0;
     this.lastFailureTime = 0;
   }
+}
+
+/**
+ * Whether an error suggests the upstream service is unhealthy. Client
+ * mistakes (protocol errors such as unknown names or invalid params, and
+ * "not found" lookups) must not trip the breaker, or a few bad component
+ * names would lock out every tool.
+ */
+export function isUpstreamFailure(error: unknown): boolean {
+  if (ProtocolError.isInstance(error)) return false;
+  const message = error instanceof Error ? error.message : String(error);
+  return !/not found/i.test(message);
 }
 
 /**

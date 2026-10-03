@@ -11,6 +11,7 @@
  */
 
 import { logInfo, logWarning } from "./logger.js";
+import { Cache } from "./cache.js";
 
 // Framework types
 export type Framework = "react" | "svelte" | "vue" | "react-native";
@@ -133,6 +134,22 @@ export async function getAxiosImplementation() {
     // Dynamic import for React implementation (default)
     return import("./axios.js").then((module) => module.axios);
   }
+}
+
+/**
+ * Get the component names for the current framework, cached for an hour.
+ * Used by argument completion (called per keystroke) and the get_components
+ * resource, so the GitHub API is not hit on every request.
+ */
+export async function getComponentNames(): Promise<string[]> {
+  return Cache.getInstance().getOrFetch(
+    `components:${getFramework()}:${getUiLibrary()}`,
+    async () => {
+      const axios = await getAxiosImplementation();
+      return axios.getAvailableComponents();
+    },
+    60 * 60 * 1000
+  );
 }
 
 /**

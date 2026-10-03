@@ -9,7 +9,7 @@ import { getFramework } from "../utils/framework.js";
 
 /**
  * Resource template definitions exported to the MCP handler
- * Each template has a name, description, uriTemplate and contentType
+ * Each template has a name, description, uriTemplate and mimeType
  */
 export const resourceTemplates = [
   {
@@ -18,7 +18,7 @@ export const resourceTemplates = [
       "Generate installation script for a specific shadcn/ui component based on package manager",
     uriTemplate:
       "resource-template:get_install_script_for_component?packageManager={packageManager}&component={component}",
-    contentType: "text/plain",
+    mimeType: "text/plain",
   },
   {
     name: "get_installation_guide",
@@ -26,7 +26,7 @@ export const resourceTemplates = [
       "Get the installation guide for shadcn/ui based on build tool and package manager",
     uriTemplate:
       "resource-template:get_installation_guide?buildTool={buildTool}&packageManager={packageManager}",
-    contentType: "text/plain",
+    mimeType: "text/plain",
   },
 ];
 

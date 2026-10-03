@@ -1,35 +1,65 @@
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-import { SSETransportManager, SSETransportOptions } from "./sse.js"
-import { Server } from "@modelcontextprotocol/sdk/server/index.js"
+import { serveStdio, type StdioServerHandle } from "@modelcontextprotocol/server/stdio"
+import type { McpServerFactory } from "@modelcontextprotocol/server"
+import { HttpTransportManager, HttpTransportOptions } from "./http.js"
 import { logInfo, logError, logWarning } from "../utils/logger.js"
 
-export type TransportMode = 'stdio' | 'sse' | 'dual'
+export type TransportMode = 'stdio' | 'http' | 'dual'
+
+/**
+ * Which protocol eras the server accepts. `any` serves 2026-07-28 clients and
+ * falls back to the 2025-era initialize handshake; `modern` accepts only the
+ * 2026-07-28 revision and rejects 2025-era openings.
+ */
+export type ProtocolPolicy = 'any' | 'modern'
+
+export function resolveProtocolPolicy(protocol?: string): ProtocolPolicy {
+  if (!protocol || protocol === 'any') return 'any'
+  if (protocol === 'modern') return 'modern'
+  throw new Error(`Unsupported protocol policy: ${protocol} (expected "modern" or "any")`)
+}
 
 export interface TransportConfig {
   mode: TransportMode
-  sse?: SSETransportOptions
+  protocol?: ProtocolPolicy
+  http?: HttpTransportOptions
+}
+
+/**
+ * Normalizes a user-supplied transport mode. `sse` is accepted as a
+ * deprecated alias for `http`: the legacy HTTP+SSE transport was removed in
+ * MCP SDK v2 and replaced by Streamable HTTP.
+ */
+export function resolveTransportMode(mode: string): TransportMode {
+  if (mode === 'sse') {
+    logWarning("Transport mode 'sse' is deprecated; using 'http' (Streamable HTTP at /mcp). The legacy /sse endpoint has been removed.")
+    return 'http'
+  }
+  if (mode === 'stdio' || mode === 'http' || mode === 'dual') {
+    return mode
+  }
+  throw new Error(`Unsupported transport mode: ${mode}`)
 }
 
 export class TransportManager {
-  private sseManager?: SSETransportManager
-  private stdioTransport?: StdioServerTransport
+  private httpManager?: HttpTransportManager
+  private stdioHandle?: StdioServerHandle
 
   constructor(private config: TransportConfig) {}
 
-  async initialize(server: Server): Promise<void> {
+  async initialize(factory: McpServerFactory, serverInfo: { name: string; version: string }): Promise<void> {
     const { mode } = this.config
 
     switch (mode) {
       case 'stdio':
-        await this.initializeStdio(server)
+        this.initializeStdio(factory)
         break
 
-      case 'sse':
-        await this.initializeSSE(server)
+      case 'http':
+        await this.initializeHttp(factory, serverInfo)
         break
 
       case 'dual':
-        await this.initializeDual(server)
+        await this.initializeDual(factory, serverInfo)
         break
 
       default:
@@ -37,12 +67,14 @@ export class TransportManager {
     }
   }
 
-  private async initializeStdio(server: Server): Promise<void> {
+  private initializeStdio(factory: McpServerFactory): void {
     try {
-      this.stdioTransport = new StdioServerTransport()
-      logInfo("Transport initialized: stdio")
-
-      await server.connect(this.stdioTransport)
+      // serveStdio negotiates the protocol era on the opening exchange:
+      // 2026-07-28 clients get the stateless revision; 2025-era clients
+      // (initialize handshake) are served unless the policy is 'modern'.
+      this.stdioHandle = serveStdio(factory, {
+        legacy: this.config.protocol === 'modern' ? 'reject' : 'serve',
+      })
       logInfo("Server connected via stdio")
     } catch (error) {
       logError("Failed to initialize stdio transport", error as Error)
@@ -50,28 +82,31 @@ export class TransportManager {
     }
   }
 
-  private async initializeSSE(server: Server): Promise<void> {
+  private async initializeHttp(factory: McpServerFactory, serverInfo: { name: string; version: string }): Promise<void> {
     try {
-      this.sseManager = new SSETransportManager(this.config.sse)
-      this.sseManager.setMcpServer(server)
+      this.httpManager = new HttpTransportManager({
+        ...this.config.http,
+        modernOnly: this.config.protocol === 'modern',
+      })
+      this.httpManager.setServerFactory(factory, serverInfo)
 
-      await this.sseManager.start()
-      logInfo("Transport initialized: SSE")
+      await this.httpManager.start()
+      logInfo("Transport initialized: Streamable HTTP")
     } catch (error) {
-      logError("Failed to initialize SSE transport", error as Error)
+      logError("Failed to initialize HTTP transport", error as Error)
       throw error
     }
   }
 
-  private async initializeDual(server: Server): Promise<void> {
+  private async initializeDual(factory: McpServerFactory, serverInfo: { name: string; version: string }): Promise<void> {
     try {
-      await this.initializeSSE(server)
+      await this.initializeHttp(factory, serverInfo)
 
       if (process.stdin.isTTY === false) {
-        await this.initializeStdio(server)
-        logInfo("Dual transport mode: Both SSE and stdio active")
+        this.initializeStdio(factory)
+        logInfo("Dual transport mode: Both HTTP and stdio active")
       } else {
-        logWarning("Dual transport mode: Only SSE active (no stdio pipe detected)")
+        logWarning("Dual transport mode: Only HTTP active (no stdio pipe detected)")
       }
     } catch (error) {
       logError("Failed to initialize dual transport", error as Error)
@@ -82,35 +117,35 @@ export class TransportManager {
   async shutdown(): Promise<void> {
     const shutdownPromises: Promise<void>[] = []
 
-    if (this.sseManager) {
-      shutdownPromises.push(this.sseManager.stop())
+    if (this.httpManager) {
+      shutdownPromises.push(this.httpManager.stop())
     }
 
-    if (this.stdioTransport) {
-      try {
-        (this.stdioTransport as any).close?.()
-      } catch (error) {
-        logWarning(`Error closing stdio transport: ${error}`)
-      }
+    if (this.stdioHandle) {
+      shutdownPromises.push(
+        this.stdioHandle.close().catch((error) => {
+          logWarning(`Error closing stdio transport: ${error}`)
+        })
+      )
     }
 
     await Promise.all(shutdownPromises)
     logInfo("All transports shutdown")
   }
 
-  getSSEManager(): SSETransportManager | undefined {
-    return this.sseManager
+  getHttpManager(): HttpTransportManager | undefined {
+    return this.httpManager
   }
 
   getStatus() {
     return {
       mode: this.config.mode,
-      sse: {
-        active: !!this.sseManager,
-        connections: this.sseManager?.getActiveConnections() || 0
+      protocol: this.config.protocol ?? 'any',
+      http: {
+        active: !!this.httpManager,
       },
       stdio: {
-        active: !!this.stdioTransport
+        active: !!this.stdioHandle
       }
     }
   }

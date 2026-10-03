@@ -89,7 +89,7 @@ export const tools = {
   },
   'get_block': {
     name: 'get_block',
-    description: 'Get source code for a specific shadcn/ui v4 block (e.g., calendar-01, dashboard-01)',
+    description: 'Get source code for a specific shadcn/ui v4 block (e.g., dashboard-01, login-02, sidebar-01)',
     inputSchema: {
       type: 'object',
       properties: getBlockSchema,

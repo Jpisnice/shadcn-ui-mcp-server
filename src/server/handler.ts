@@ -4,30 +4,29 @@
  * This file configures how the server responds to various MCP requests by setting up
  * handlers for resources, resource templates, tools, and prompts.
  * 
- * Updated for MCP SDK 1.16.0 with improved error handling and request processing.
+ * Uses the MCP TypeScript SDK v2 low-level Server (method-string handler registration).
  */
 import {
-  CallToolRequestSchema,
-  ListResourcesRequestSchema,
-  ListResourceTemplatesRequestSchema,
-  ReadResourceRequestSchema,
-  ListToolsRequestSchema,
-  GetPromptRequestSchema,
-  ListPromptsRequestSchema,
-  ErrorCode,
-  McpError
-} from "@modelcontextprotocol/sdk/types.js";
-import { type Server } from "@modelcontextprotocol/sdk/server/index.js";
+  type Server,
+  type Tool,
+  type CallToolResult,
+  type GetPromptResult,
+  type CompleteResult,
+  ProtocolError,
+  ProtocolErrorCode,
+  ResourceNotFoundError,
+} from "@modelcontextprotocol/server";
 import { resourceHandlers, resources } from "../resources/index.js";
 import { promptHandlers, prompts } from "../prompts/index.js";
 import { toolHandlers, tools } from "../tools/index.js";
+import { complete } from "../completions/index.js";
 import {
   getResourceTemplate,
   resourceTemplates,
 } from "../resource-templates/index.js";
 import { z } from "zod";
 import { validateAndSanitizeParams, validateRequest, getValidationSchema } from '../utils/validation.js';
-import { circuitBreakers } from '../utils/circuit-breaker.js';
+import { circuitBreakers, isUpstreamFailure } from '../utils/circuit-breaker.js';
 import { logError, logInfo } from '../utils/logger.js';
 
 // Define basic component schemas here for tool validation
@@ -52,7 +51,7 @@ async function handleRequest<T>(
     const validatedParams = validateAndSanitizeParams(method, params);
     
     // Execute the handler with circuit breaker protection for external calls
-    const result = await circuitBreakers.external.execute(() => handler(validatedParams));
+    const result = await circuitBreakers.external.execute(() => handler(validatedParams), isUpstreamFailure);
     
     return result;
   } catch (error) {
@@ -63,15 +62,14 @@ async function handleRequest<T>(
 
 /**
  * Sets up all request handlers for the MCP server
- * Following MCP SDK 1.16.0 best practices for handler registration
+ * Handlers are registered by spec method name (MCP SDK v2)
  * @param server - The MCP server instance
  */
 export const setupHandlers = (server: Server): void => {
   logInfo('Setting up request handlers...');
 
   // List available resources when clients request them
-  server.setRequestHandler(
-    ListResourcesRequestSchema,
+  server.setRequestHandler('resources/list',
     async (request) => {
       return await handleRequest(
         'list_resources',
@@ -82,7 +80,7 @@ export const setupHandlers = (server: Server): void => {
   );
   
   // Resource Templates
-  server.setRequestHandler(ListResourceTemplatesRequestSchema, async (request) => {
+  server.setRequestHandler('resources/templates/list', async (request) => {
     return await handleRequest(
       'list_resource_templates',
       request.params,
@@ -91,13 +89,13 @@ export const setupHandlers = (server: Server): void => {
   });
 
   // List available tools
-  server.setRequestHandler(ListToolsRequestSchema, async (request) => {
+  server.setRequestHandler('tools/list', async (request) => {
     return await handleRequest(
       'list_tools',
       request.params,
       async () => {
         // Return the tools that are registered with the server
-        const registeredTools = [
+        const registeredTools: Tool[] = [
           {
             name: 'get_component',
             description: 'Get the source code for a specific shadcn/ui v4 component',
@@ -195,13 +193,13 @@ export const setupHandlers = (server: Server): void => {
           },
           {
             name: 'get_block',
-            description: 'Get source code for a specific shadcn/ui v4 block (e.g., calendar-01, dashboard-01)',
+            description: 'Get source code for a specific shadcn/ui v4 block (e.g., dashboard-01, login-02, sidebar-01)',
             inputSchema: {
               type: 'object',
               properties: {
                 blockName: {
                   type: 'string',
-                  description: 'Name of the block (e.g., "calendar-01", "dashboard-01", "login-02")',
+                  description: 'Name of the block (e.g., "dashboard-01", "login-02", "sidebar-01")',
                 },
                 includeComponents: {
                   type: 'boolean',
@@ -300,7 +298,7 @@ export const setupHandlers = (server: Server): void => {
   });
   
   // Return resource content when clients request it
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler('resources/read', async (request) => {
     return await handleRequest(
       'read_resource',
       request.params,
@@ -312,9 +310,9 @@ export const setupHandlers = (server: Server): void => {
         if (resourceHandler) {
           const result = await Promise.resolve(resourceHandler());
           return {
-            contentType: result.contentType,
             contents: [{
               uri: uri,
+              mimeType: result.contentType,
               text: result.content
             }]
           };
@@ -325,21 +323,22 @@ export const setupHandlers = (server: Server): void => {
         if (resourceTemplateHandler) {
           const result = await Promise.resolve(resourceTemplateHandler());
           return {
-            contentType: result.contentType,
             contents: [{
               uri: uri,
+              mimeType: result.contentType,
               text: result.content
             }]
           };
         }
         
-        throw new Error(`Resource not found: ${uri}`);
+        // -32602 with data.uri, per the 2026-07-28 spec (previously -32002)
+        throw new ResourceNotFoundError(uri, `Resource not found: ${uri}`);
       }
     );
   });
 
   // List available prompts
-  server.setRequestHandler(ListPromptsRequestSchema, async (request) => {
+  server.setRequestHandler('prompts/list', async (request) => {
     return await handleRequest(
       'list_prompts',
       request.params,
@@ -348,7 +347,7 @@ export const setupHandlers = (server: Server): void => {
   });
 
   // Get specific prompt content with optional arguments
-  server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+  server.setRequestHandler('prompts/get', async (request): Promise<GetPromptResult> => {
     return await handleRequest(
       'get_prompt',
       request.params,
@@ -357,16 +356,24 @@ export const setupHandlers = (server: Server): void => {
         const promptHandler = promptHandlers[name as keyof typeof promptHandlers];
         
         if (!promptHandler) {
-          throw new Error(`Prompt not found: ${name}`);
+          throw new ProtocolError(ProtocolErrorCode.InvalidParams, `Prompt not found: ${name}`);
         }
         
-        return promptHandler(args as any);
+        // Prompt helpers build untyped literals; they follow the GetPromptResult shape
+        return promptHandler(args as any) as GetPromptResult;
       }
     );
   });
 
+  // Argument completion for prompts and resource templates. Not routed through
+  // handleRequest: it runs per keystroke and already returns empty results on
+  // failure, so it should not count against the circuit breaker.
+  server.setRequestHandler('completion/complete', async (request): Promise<CompleteResult> => {
+    return complete(request.params.ref, request.params.argument);
+  });
+
   // Tool request Handler - executes the requested tool with provided parameters
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler('tools/call', async (request): Promise<CallToolResult> => {
     return await handleRequest(
       'call_tool',
       request.params,
@@ -374,13 +381,13 @@ export const setupHandlers = (server: Server): void => {
         const { name, arguments: params } = validatedParams;
         
         if (!name || typeof name !== 'string') {
-          throw new Error("Tool name is required");
+          throw new ProtocolError(ProtocolErrorCode.InvalidParams, "Tool name is required");
         }
         
         const handler = toolHandlers[name as keyof typeof toolHandlers];
 
         if (!handler) {
-          throw new Error(`Tool not found: ${name}`);
+          throw new ProtocolError(ProtocolErrorCode.InvalidParams, `Tool not found: ${name}`);
         }
 
         // Validate the tool's own arguments (the call_tool schema above only
@@ -399,12 +406,23 @@ export const setupHandlers = (server: Server): void => {
           }
         }
 
-        // Execute handler with circuit breaker protection
-        const result = await circuitBreakers.external.execute(() => 
-          Promise.resolve(handler(toolArgs))
-        );
-        
-        return result;
+        // Execute with circuit breaker protection. Execution failures (missing
+        // component, GitHub errors, open breaker) are returned as tool results
+        // with isError so the model can read them and self-correct; protocol
+        // errors are reserved for unknown tools and malformed requests.
+        try {
+          const result = await circuitBreakers.external.execute(
+            () => Promise.resolve(handler(toolArgs)),
+            isUpstreamFailure
+          );
+          return result as CallToolResult;
+        } catch (error) {
+          logError(`Tool  failed`, error);
+          return {
+            content: [{ type: "text", text: error instanceof Error ? error.message : String(error) }],
+            isError: true
+          };
+        }
       }
     );
   });
@@ -419,7 +437,7 @@ export const setupHandlers = (server: Server): void => {
 
 /**
  * Get Zod schema for tool validation if available
- * Following MCP SDK 1.16.0 best practices for schema validation
+ * 
  * @param toolName Name of the tool
  * @returns Zod schema or undefined
  */

@@ -4,6 +4,7 @@ export type CliOptions = {
   port?: string
   host?: string
   cors?: string
+  protocol?: string
 }
 
 export function parseArgs(argv = process.argv.slice(2)): CliOptions {
@@ -49,6 +50,16 @@ export function parseArgs(argv = process.argv.slice(2)): CliOptions {
     options.cors = argv[corsIndex + 1]
   } else if (process.env.MCP_CORS_ORIGINS) {
     options.cors = process.env.MCP_CORS_ORIGINS
+  }
+
+  // Parse protocol era policy (modern = 2026-07-28 only, any = also 2025-era).
+  // The last occurrence wins, so `npm run dev -- --protocol any` overrides the
+  // script's default.
+  const protocolIndex = argv.lastIndexOf("--protocol")
+  if (protocolIndex !== -1 && argv[protocolIndex + 1]) {
+    options.protocol = argv[protocolIndex + 1]
+  } else if (process.env.MCP_PROTOCOL) {
+    options.protocol = process.env.MCP_PROTOCOL
   }
 
   return options

@@ -18,7 +18,7 @@ export function getPageTypeSpecificInstructions(pageType: string): string {
    - Ensure mobile-responsive design`,
 
     calendar: `
-   - Use calendar blocks (calendar-01 through calendar-32)
+   - Use calendar blocks where the registry has them (calendar-01 through calendar-32 in Svelte); otherwise build on the calendar component
    - Implement different calendar views (month, week, day)
    - Add event creation and management
    - Include date navigation and filtering
