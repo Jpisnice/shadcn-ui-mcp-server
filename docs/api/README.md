@@ -6,19 +6,19 @@ Complete reference for the shadcn/ui MCP Server tools and capabilities.
 
 ### Component Tools
 
-- [get_component](get-component.md) - Get component source code
-- [get_component_demo](get-component-demo.md) - Get component usage examples
-- [list_components](list-components.md) - List all available components
-- [get_component_metadata](get-component-metadata.md) - Get component dependencies and info
+- `get_component` - Get component source code
+- `get_component_demo` - Get component usage examples
+- `list_components` - List all available components
+- `get_component_metadata` - Get component dependencies and info
 
 ### Block Tools
 
-- [get_block](get-block.md) - Get complete block implementations
-- [list_blocks](list-blocks.md) - List all available blocks with categories
+- `get_block` - Get complete block implementations
+- `list_blocks` - List all available blocks with categories
 
 ### Repository Tools
 
-- [get_directory_structure](get-directory-structure.md) - Explore repository structure
+- `get_directory_structure` - Explore repository structure
 
 ### Theme Tools
 
@@ -93,8 +93,8 @@ All tools support four frameworks:
 
 ## 🔗 Next Steps
 
-- [get_component](get-component.md) - Component source code tool
-- [get_component_demo](get-component-demo.md) - Component demo tool
-- [list_components](list-components.md) - Component listing tool
-- [get_block](get-block.md) - Block implementation tool
-- [list_blocks](list-blocks.md) - Block listing tool 
+- `get_component` - Component source code tool
+- `get_component_demo` - Component demo tool
+- `list_components` - Component listing tool
+- `get_block` - Block implementation tool
+- `list_blocks` - Block listing tool

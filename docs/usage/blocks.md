@@ -205,6 +205,4 @@ Note: Blocks are currently not available for React Native. The tools return an i
 ## 🔗 Next Steps
 
 - [Component Examples](components.md) - Working with individual components
-- [Framework Comparison](framework-comparison.md) - Cross-framework examples
-- [Real-world Projects](real-world-projects.md) - Complete application examples
-- [Best Practices](best-practices.md) - Tips for optimal usage 
+- [Framework Comparison](../frameworks/README.md) - Cross-framework examples

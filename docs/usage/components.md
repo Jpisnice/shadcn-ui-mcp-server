@@ -190,6 +190,4 @@ This will return the complete TypeScript source code for the button component, i
 ## 🔗 Next Steps
 
 - [Block Examples](blocks.md) - Working with complete blocks
-- [Framework Comparison](framework-comparison.md) - Cross-framework examples
-- [Real-world Projects](real-world-projects.md) - Complete application examples
-- [Best Practices](best-practices.md) - Tips for optimal usage 
+- [Framework Comparison](../frameworks/README.md) - Cross-framework examples
