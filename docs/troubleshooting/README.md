@@ -4,11 +4,10 @@ Common issues and solutions for the shadcn/ui MCP Server.
 
 ## 🐛 Common Issues
 
-- [Installation Issues](installation-issues.md) - Problems with installation and setup
-- [Rate Limit Issues](rate-limit-issues.md) - GitHub API rate limiting problems
-- [Framework Issues](framework-issues.md) - Framework-specific problems
-- [Integration Issues](integration-issues.md) - Editor and tool integration problems
-- [Network Issues](network-issues.md) - Connection and proxy problems
+- [Installation Issues](../getting-started/installation.md) - Problems with installation and setup
+- [Rate Limit Issues](../getting-started/github-token.md) - GitHub API rate limiting problems
+- [Framework Issues](../getting-started/framework-selection.md) - Framework-specific problems
+- [Integration Issues](../integration/README.md) - Editor and tool integration problems
 
 ## 🚨 Quick Fixes
 
@@ -73,7 +72,7 @@ MCP protocol logging (`notifications/message`) isn't used, because the
 
 ## 🔗 Next Steps
 
-- [Installation Issues](installation-issues.md) - Detailed installation troubleshooting
-- [Rate Limit Issues](rate-limit-issues.md) - GitHub API problems
-- [Framework Issues](framework-issues.md) - Framework-specific problems
-- [Integration Issues](integration-issues.md) - Editor integration problems 
+- [Installation Issues](../getting-started/installation.md) - Detailed installation troubleshooting
+- [Rate Limit Issues](../getting-started/github-token.md) - GitHub API problems
+- [Framework Issues](../getting-started/framework-selection.md) - Framework-specific problems
+- [Integration Issues](../integration/README.md) - Editor integration problems 

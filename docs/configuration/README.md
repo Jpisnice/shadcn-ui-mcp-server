@@ -4,11 +4,10 @@ Detailed configuration options for the shadcn/ui MCP Server.
 
 ## ⚙️ Configuration Options
 
-- [Framework Selection](framework-selection.md) - Choosing between React, Svelte, Vue, and React Native
-- [GitHub Token Setup](github-token-setup.md) - Setting up GitHub API access
-- [Environment Variables](environment-variables.md) - Using environment variables
-- [Command Line Options](command-line-options.md) - All available CLI options
-- [Advanced Configuration](advanced-configuration.md) - Advanced setup options
+- [Framework Selection](../getting-started/framework-selection.md) - Choosing between React, Svelte, Vue, and React Native
+- [GitHub Token Setup](../getting-started/github-token.md) - Setting up GitHub API access
+- [Environment Variables](#-environment-variables) - Using environment variables
+- [Command Line Options](#-command-line-options) - All available CLI options
 
 ## 🚀 Quick Configuration
 
@@ -107,8 +106,7 @@ npx @jpisnice/shadcn-ui-mcp-server --framework react-native
 
 ## 🔗 Next Steps
 
-- [Framework Selection](framework-selection.md) - Detailed framework configuration
-- [GitHub Token Setup](github-token-setup.md) - Setting up optimal performance
-- [Environment Variables](environment-variables.md) - Using environment variables
-- [Command Line Options](command-line-options.md) - Complete CLI reference
-- [Advanced Configuration](advanced-configuration.md) - Advanced setup options 
+- [Framework Selection](../getting-started/framework-selection.md) - Detailed framework configuration
+- [GitHub Token Setup](../getting-started/github-token.md) - Setting up optimal performance
+- [Environment Variables](#-environment-variables) - Using environment variables
+- [Command Line Options](#-command-line-options) - Complete CLI reference
