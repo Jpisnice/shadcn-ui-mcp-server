@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/jpisnice-shadcn-ui-mcp-server-badge.png)](https://mseep.ai/app/jpisnice-shadcn-ui-mcp-server)
+
 # Shadcn UI v4 MCP Server
 
 [![npm version](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server.svg)](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server)
