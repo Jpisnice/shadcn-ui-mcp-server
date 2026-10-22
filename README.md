@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server.svg)](https://badge.fury.io/js/@jpisnice%2Fshadcn-ui-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP spec 2026-07-28](https://img.shields.io/badge/MCP_spec-2026--07--28-blue)](https://modelcontextprotocol.io/specification/2026-07-28)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.jpisnice/shadcn-ui-mcp-server)](https://lightnow.ai/servers/io.github.jpisnice/shadcn-ui-mcp-server)
 
 [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/Jpisnice/shadcn-ui-mcp-server)](https://archestra.ai/mcp-catalog/jpisnice__shadcn-ui-mcp-server)
 
