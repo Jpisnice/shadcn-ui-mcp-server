@@ -215,6 +215,14 @@ See [Claude Code Integration Guide](docs/integration/claude-code.md) for framewo
 
 > **Reference:** [Claude Code MCP Documentation](https://code.claude.com/docs/en/mcp)
 
+## 💻 Other AI Agent Integration
+
+Use [Agent Add](https://github.com/pea3nut/agent-add) to install the existing MCP configuration, then select your client:
+
+```bash
+npx -y agent-add --global --mcp https://raw.githubusercontent.com/Jpisnice/shadcn-ui-mcp-server/master/.mcp.json
+```
+
 ## 🎯 Use Cases
 
 - **AI-Powered Development** - Let AI assistants build UIs with shadcn/ui
